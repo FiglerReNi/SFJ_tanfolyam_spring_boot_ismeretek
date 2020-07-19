@@ -1,0 +1,15 @@
+﻿Spring: 
+	keretrendszer, 
+	ingyenes, nyílt forráskódú
+	modulokkal rendelkezik
+	orm kompatibilis
+	rest service
+	dokumentáció: spring.io
+
+Loosely coupled (lazán összekapcsolt): Minden ami külön részekre bontható, önmagában képviseljen egy kódrészletet. Önmagában alkosson egy 	egységet és legyen újrafelhasználható, akár egy másik projektben is.
+
+Container: Spring biztosítja ezt. Tud bizonyos objektumokról, amelykről ő gondoskodik és hozza létre ha szükség van rá.
+
+IoC (Inversion of Control): Feleslegesen létrehozott objetumoknak az elkerülése a container segítségével.
+
+Dependency Injection: Az inversion of control egyik megjelenési formája. Lehetővé teszi, hogy a container legyárthassa, kézben tarthassa és odaadhassa (injetálhassa) az objektumoknak azokat az objektumokat amire szükségük van. Az átadás konstruktor alapon vagy setter alapon történik a springben.
