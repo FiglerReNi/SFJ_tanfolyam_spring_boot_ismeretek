@@ -1,0 +1,14 @@
+Csomagolás:
+	- .war: ha van egy ilyen fájlunk és bemásoljuk a tomcat webapps mappájába, akkor a tomcat indulásakor kicsomagolja ezt a fájlt olyan szerkezetűvé mint amilyen a saját példa alkalmazásunk volt és futtatja. A tomcat oldalán a manager appban van egy rész, ahol tallózva is betehetünk .war filet és a deployra nyomva el is kezdi kicsomagolni a tomcat és a megfelelő helyre teszi.
+	.war és .jar fájlokat csomagoló programok hoznak létre:
+		- maven
+		- gradle: binary only legfrisebb verziót töltjük le, ehhez is megcsináljuk a környezeti változót, command line verzió ellenőrzés gradle -v; ez groovy alapú
+		- ant:  legrégebbi 
+	Ezek csomagolnak, lefordíttatnak a compilerrel, beszerzik a dependenciákat
+		
+pom.xml: Generálja a spring, de végezhetünk rajta módosításokat. Ez a fájl a maven-hez kell, ebben lesz egy lista a külső függőségekről (pl itext, jdbc) amire szükségem van, és a maven ez alapján megkeresi, letölti és a helyére teszi ezeket a függőségeket. A maven egy csomagoló program, ennek segítségével készül el a futtatható .jar vagy .war file-unk is . Tartalmazza az ehhez szükséges metaadatokat (pl hogy melyik készüljön el, .jar vagy .war)
+<parent> tag mondja meg, hogy milyen magot szeretnénk használni a spring bootból. ---> egy már meglévő kódállományt terjesztünk ki.
+
+A spring meg tudja kérni a mavent közvetlenül a csomagolásra, így ezzel nem kell foglalkoznunk, de manuálisan is lehet használni.
+
+Maven: Van egy un. centrál repositorja, ahová fel vannak töltve különböző szoftvercsomagok. Ezeket tudjuk lehúzni, a pom.xml-ben határozzuk meg, hogy mire van szükségünk. bin.zip verziót töltjük le a maven-ből, hogy ne azt használjuk amit a spring ad, hanem ki tudjuk próbálni magunk.
