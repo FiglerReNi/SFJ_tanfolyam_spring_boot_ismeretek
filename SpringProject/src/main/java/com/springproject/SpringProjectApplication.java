@@ -11,13 +11,14 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /*Az alsó hármat váltja ki a legfelső*/
-/*@SpringBootApplication*/
-@Configuration
+@SpringBootApplication
+/*@Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan*/
 public class SpringProjectApplication {
 
 	public static void main(String[] args) {
+		//ennek a visszatérési értéke a container
 		SpringApplication.run(SpringProjectApplication.class, args);
 	}
 
