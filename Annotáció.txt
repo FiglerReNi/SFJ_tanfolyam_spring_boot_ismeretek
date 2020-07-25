@@ -1,0 +1,33 @@
+Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
+
+@SpringBootApplication - az osztály neve fölé jön, ez az egyik legismertebb, jelzi hogy ez egy spring boot applikáció (a main függvényt tartalmazó osztálynál használjuk).
+	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
+		- @Configuration
+		- @EnableAutoConfiguration
+		- @ComponentScan
+		
+@RestController - az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. A container is tud róla. Kap egy requestet és bármilyen választ tud rá adni: xml, json, html stb.
+
+@RequestMapping("/") - útvonalat határozok meg vele, metódus fölé jöhet, ha ezt az útvonalat írja be a felhasználó, akkor hívódik meg a függvény.
+
+Container: SpringApplication.run(SpringProjectApplication.class, args) ---> ennek a visszatérési értéke a container.
+		   Adattípusa: ApplicationContainer
+
+Beans (babok):
+A container-ben regisztrálva vannak azok az osztályok amelyek objektumairól neki kell gondoskodnia (hogyan kell létrehozni, milyen módon kell foglalkozni velük, mikor kell törölni őket). Ezeket az osztályokat jelölik az ún. bean-ek. 
+Ahhoz hogy valami bean legyen el kell látni annotációval.
+Ilyen:
+	@RestController ---> speciális bean
+	@Component @Scope("session")  ---> így jelezzük hogy bean és hogy mi az életciklusa
+A bean-eknek van életciklusuk, ezt nevezzük scope-nak, 5 féle lehet:
+	singleton: ez az alap, ha nem határozzuk meg máshogy, ez azt jelenti, hogy egy darab jön belőle létre. pl RestController
+	prototype: mindig minden egyes alkalommal új objektumot készít.
+	requestet: minden egyes http leérdezéssel új példányt készít. Pl honlapfrissítésenként.
+	session: egy embert ismer fel és hozzá köt egy babot. Webshopoknál jó, ha ugyanaz az ember frissíti a böngészőt nem példányosít újra és veszik el amit berakott a kosárba, mint ha request scope lenne.
+	globalSession: portleteknél használjuk.
+	
+Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a container-nek kezelnie kell. Éa a @Autowired annotációval látjuk el, hogy tudja a container, hogy ezen a helyen kell gondolskodnia az objektumról.
+3 fajtája van:
+- változóént - nehezebb tesztelni
+- setterben - általában ezt használjuk
+- konstruktorban
