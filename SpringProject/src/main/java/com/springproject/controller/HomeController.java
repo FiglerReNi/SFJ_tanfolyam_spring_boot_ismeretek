@@ -1,9 +1,13 @@
-package com.springproject;
+package com.springproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.springproject.service.PeldaService;
+import com.springproject.service.SpyGirlService;
+
+//Ez is bean lesz (speciális)
 @RestController
 public class HomeController {
 	
@@ -18,10 +22,16 @@ public class HomeController {
 	private SpyGirl spicy;*/
 	
 	//Dependency Injection 2.
-	private SpyGirl spicy;
+	private SpyGirlService spicy;
 	@Autowired
-	public void setSpicy(SpyGirl spicy) {
+	public void setSpicy(SpyGirlService spicy) {
 		this.spicy = spicy;
+	}
+	
+	private PeldaService pelda;
+	@Autowired
+	public void setPelda(PeldaService pelda) {
+		this.pelda = pelda;
 	}
 
 	/*Dependency Injection 3.
@@ -31,10 +41,17 @@ public class HomeController {
 		this.spicy = spicy;
 	}*/
 	
+
 	/*Ezzel adom meg, hogy milyen útvonalnál hívódjon meg ez a függvény*/
 	@RequestMapping("/")
 	public String index() {
 		//return "Szia Reni";
 		return spicy.iSaySomething();
+	}
+	
+	@RequestMapping("/test")
+	public String test() {
+		//return "Szia Reni";
+		return pelda.pelda();
 	}
 }
