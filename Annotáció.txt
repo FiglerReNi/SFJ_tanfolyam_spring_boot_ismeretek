@@ -4,7 +4,7 @@ Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
 	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
 		- @Configuration
 		- @EnableAutoConfiguration
-		- @ComponentScan
+		- @ComponentScan: Ez arra jó, hogy az adott package-ben megvizsgáltatja a containerrel az összes java osztályt, hogy bean-e valamelyik, ha igen bekerül azok közé amikre figyel a container. Megmondhatjuk azt is, hogy más packagekben is keressen.
 		
 @RestController - az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. A container is tud róla. Kap egy requestet és bármilyen választ tud rá adni: xml, json, html stb.
 
@@ -12,6 +12,7 @@ Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
 
 Container: SpringApplication.run(SpringProjectApplication.class, args) ---> ennek a visszatérési értéke a container.
 		   Adattípusa: ApplicationContainer
+		   Kiolvashatjuk a listát, amely classokból létrejött objektumokról gondoskodnia kell. Nagyon sok előre regisztrált bean lesz benne, amiket nem mi hoztunk létre, hanem készen kaptuk. A bean nevek a listában ugyanazok mint az osztály nevek, csak kis betűvel kezdődnek. Ezt lehet módosítani az annotációban, pl @Service("ujnev"); @Component("ujnev").
 
 Beans (babok):
 A container-ben regisztrálva vannak azok az osztályok amelyek objektumairól neki kell gondoskodnia (hogyan kell létrehozni, milyen módon kell foglalkozni velük, mikor kell törölni őket). Ezeket az osztályokat jelölik az ún. bean-ek. 
@@ -19,15 +20,19 @@ Ahhoz hogy valami bean legyen el kell látni annotációval.
 Ilyen:
 	@RestController ---> speciális bean
 	@Component @Scope("session")  ---> így jelezzük hogy bean és hogy mi az életciklusa
+	@Service ---> a service-k megklönböztetett annotációja. A Servicek az MVC struktúra controller rétegéhez tartoznak és a kalkulációkat, számításokat végzik.
 A bean-eknek van életciklusuk, ezt nevezzük scope-nak, 5 féle lehet:
 	singleton: ez az alap, ha nem határozzuk meg máshogy, ez azt jelenti, hogy egy darab jön belőle létre. pl RestController
 	prototype: mindig minden egyes alkalommal új objektumot készít.
 	requestet: minden egyes http leérdezéssel új példányt készít. Pl honlapfrissítésenként.
 	session: egy embert ismer fel és hozzá köt egy babot. Webshopoknál jó, ha ugyanaz az ember frissíti a böngészőt nem példányosít újra és veszik el amit berakott a kosárba, mint ha request scope lenne.
 	globalSession: portleteknél használjuk.
+A bean-eknek beállíthatjuk, hogy lazy initialization mode-juk legyen, ami azt jelenti, hogy amikor létre jön az egész szerver, akkor a container ne hozza létre ezt a bean-t. Csak akor hozza létre amikor először szükség van rá.
+Ha POJO-t hozunk létre, ott az osztály fölé nem írunk annotációt, de a @SpringBootApplication annotációval ellátott osztályban a main fölött létrehozhatunk egy bean objektumot a POJO-ból.
 	
 Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a container-nek kezelnie kell. Éa a @Autowired annotációval látjuk el, hogy tudja a container, hogy ezen a helyen kell gondolskodnia az objektumról.
 3 fajtája van:
 - változóént - nehezebb tesztelni
 - setterben - általában ezt használjuk
 - konstruktorban
+

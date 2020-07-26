@@ -3,3 +3,13 @@ Repository: A kód módosításait a fejlesztők felkommitolják egy repositoryb
 DevServer: Ennek hozzáférése van a verziókezelő rendszerhez, észleli ha változás történik, maven segítségével készít egy .jar filet. Ezt lehet szabályozni, hogy például félóránként ellenőrizze volt-e változás, és az akkori álatpotból csinál egy verziót. (Ezt mi Jenkins --> kézzel csináljuk). A .jar file-t futtatni is tudja. (maven clean install, java -jar xy.jar parancsok segítségével történnek ezek). Ezen a szerveren lehet tesztelni. UNIT tesztek vannak erre, eze leellenőrzik, hogy minden funkció továbbra is működik-e. Ha valami elromlott tud emailt küldeni róla, és meg tudja mondani azt is hol a baj. Ki lehet próbálni kézzel is.
 TestServer: Opcionális, nem mindig csinálják. Ha minden rendben van a másik helyen átmegy ide a verzió, és itt lehet egyéb teszteknek még alávetni, pl stressz teszt. Itt lehet nyílt tesztet csinálni, ahol emberek tesztelik le a programot, akár a megrendelő is.
 ProductionServer: Live szerver, kész produktum van rajta, ezt érik el a felhsználók, ennek van domain neve.
+
+Projekt felépítése: 
+MVC:
+	- Nézet(View): html, css, js
+	- Controller: két része lesz:
+						- Controller: információ begyűjtése és visszavitele a nézet felé
+						- Service: üzleti logika, kalkulációk, számítások a kapott adatokból, még mielőtt elküldenénk az adatbázisnak vagy mielőtt visszaküldenénk.
+	- Modell
+Ennek megfelelően létrehozunk egy fő packaget, és ez alatt létrehozunk sub package-ket, hogy külön tudjuk tenni a controllert és a service-ket. Azért csináljuk így, mert a componentscan csak az adott package-ben keresi a beaneket, ha nem írjuk felül. Így egy package-ben lesznek de mégis külön logikailag.						
+	
