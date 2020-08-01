@@ -1,5 +1,8 @@
 Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
 
+@Value - ha egy változó értékét az application.yaml/properties fájlból olvassuk ki, így jelöljük, hogy ott keresse.
+	pl:@Value("${HomeController.msg}")
+
 @SpringBootApplication - az osztály neve fölé jön, ez az egyik legismertebb, jelzi hogy ez egy spring boot applikáció (a main függvényt tartalmazó osztálynál használjuk).
 	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
 		- @Configuration
@@ -35,4 +38,5 @@ Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a con
 - változóént - nehezebb tesztelni
 - setterben - általában ezt használjuk
 - konstruktorban
+
 

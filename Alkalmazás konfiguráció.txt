@@ -1,0 +1,30 @@
+application.properties: A java kód kapcsolata a külvilággal. A kód újrafordítása nélkül változtatható. Ebben határozhatjuk meg pl. az adatbázis kapcsolódás adatait, vagy az email server adatait. A .jar file mellett szokták létrehozni. Alap esetben a .jar file is tartalmaz egyet, és ha nincs külső meghatározva, akkor az ebben lévő adatokat használja a program. De célszerű külsőt létrehozni, és a belső maximum a környezetnek megfelelő változókat hív meg a külső property file-ból.
+Olyan helyre célszerű tenni, ahol nem érheti el a felhasználó:
+	- kitesszük a .jar file mellé
+	- elmentem valahová a szerveren és class pathon keresztül adom meg
+	- környezeti változóba teszem a helyét és így adom át.
+Hierarchia:
+	- belső application.properties (.jar belül): itt keres legelőször, ha itt nem talál akkor megy tovább
+	- külső application.properties (.jar mellett)
+	- profil alapú konfiguráció
+	- OS környezeti változói
+	- Java System Properties
+	- JNDI attribútumok (java:comp/env)
+	- cmd parancssor (terminál: pl ha van portbeállítás a properties-ben, de itt megadok valami mást, ezt fogja használni)
+Adatok beírása:
+	Bármilyen szerkezetet kitalálhatunk, a . -ok egységeket különböztetnek meg.
+	common.database.username = admin;
+	portbeállítás: server.port = 9001
+application.yaml: ugyanazt tudja, csak más formátumban adom meg az adatokat. A properties az erősebb, ha mindkettőben benne van egy adat pl. username, azt használja amelyik a properties-ben van.
+	common:
+		database:
+			username: admin
+CMD-ből futtatva, a properties-ben lévő port felülírása: 
+	tartalmazó mappa: mvn package 
+	target mappa: java -jar springproject-0.1.jar //így a properties-ben lévő porton indítja
+				  java -Dserver.port=8090 -jar springproject-0.1.jar
+A konfigurációs fájlokban nem csak konstans értékeket adhatunk meg.
+	pl.: ${random.value}  - csak egyszer fog értéket generálni és mindig azt adja vissza, számok+betűk
+		 ${random.int} - csak szám
+		 ${random.long} - csak szám
+		 ${random.int{0,100}} - csak szám, tartományon belül
