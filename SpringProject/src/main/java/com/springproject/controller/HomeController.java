@@ -1,6 +1,7 @@
 package com.springproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +11,11 @@ import com.springproject.service.SpyGirlService;
 //Ez is bean lesz (speciális)
 @RestController
 public class HomeController {
-	
+	//kiolvasás yaml fájl értéket
+	@Value("${HomeController.msg}")
+	private String message;
+	@Value("${HomeController.random}")
+	private String random;
 	/*tightly coupled, ha így csináljuk minden alkalommal új objektum jön létre,amikor meghívódik az osztály. 
 	Jelen esetben a restcontroller singleton ezért egyetlen egyszer fog létrejönni, ez így nem jó, mert mi sessiononként szeretnénk
 	új SpyGirl objektumot
@@ -53,5 +58,15 @@ public class HomeController {
 	public String test() {
 		//return "Szia Reni";
 		return pelda.pelda();
+	}
+	
+	@RequestMapping("/test1")
+	public String test1() {
+		return message;
+	}
+	
+	@RequestMapping("/test2")
+	public String test2() {
+		return random;
 	}
 }

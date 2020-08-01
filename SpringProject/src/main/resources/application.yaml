@@ -1,0 +1,9 @@
+common:
+  database:
+    username: admin
+    password: password
+    url: 127.0.0.1
+  emailserver:
+    url: 127.0.0.1
+HomeController:
+  msg: Ez a yaml fájlból van kiolvasva
