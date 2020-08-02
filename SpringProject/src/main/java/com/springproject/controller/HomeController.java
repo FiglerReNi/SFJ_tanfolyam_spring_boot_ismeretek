@@ -15,7 +15,13 @@ public class HomeController {
 	@Value("${HomeController.msg}")
 	private String message;
 	@Value("${HomeController.random}")
-	private String random;
+	private String rand;
+	@Value("${HomeController.szam}")
+	private long teszt1;
+	@Value("${HomeController.number}")
+	private int teszt2;
+	@Value("${HomeController.tartomany}")
+	private int teszt3;
 	/*tightly coupled, ha így csináljuk minden alkalommal új objektum jön létre,amikor meghívódik az osztály. 
 	Jelen esetben a restcontroller singleton ezért egyetlen egyszer fog létrejönni, ez így nem jó, mert mi sessiononként szeretnénk
 	új SpyGirl objektumot
@@ -67,6 +73,6 @@ public class HomeController {
 	
 	@RequestMapping("/test2")
 	public String test2() {
-		return random;
+		return rand + " " + teszt1 + " " + teszt2 + " " + teszt3;
 	}
 }

@@ -6,4 +6,4 @@ common:
   emailserver:
     url: 127.0.0.1
 HomeController:
-  msg: Ez a yaml fájlból van kiolvasva
+  msg: Ez a yaml fájlból van kiolvasva.
