@@ -9,6 +9,8 @@ MVC:
 	- Nézet(View): html, css, js
 	- Controller: két része lesz:
 						- Controller: információ begyűjtése és visszavitele a nézet felé
+							alap: nézetet keres amit visszaad, oldalakra irányít
+							rest: adatot ad vissza egyből, json, xml
 						- Service: üzleti logika, kalkulációk, számítások a kapott adatokból, még mielőtt elküldenénk az adatbázisnak vagy mielőtt visszaküldenénk.
 	- Modell
 Ennek megfelelően létrehozunk egy fő packaget, és ez alatt létrehozunk sub package-ket, hogy külön tudjuk tenni a controllert és a service-ket. Azért csináljuk így, mert a componentscan csak az adott package-ben keresi a beaneket, ha nem írjuk felül. Így egy package-ben lesznek de mégis külön logikailag.						

@@ -17,3 +17,6 @@ Az újabb verziókban már benne van ez a devTools dependency alapból, így csa
 Előnye: ha változtatunk valamit a kódon és elmentjük, automatikusan újra indítja a tomcat szervert, és nem kell kézzel.
 	Felismeri, hogy fejlesztői környezetben vagyunk, tehát élesen nem fog újraindítani semmit.
 A böngészőkre pedig vannak olyan kiegészítők, amik lefrissítik magát az oldalt is, így a frissít gombot sem kell megnyomni.
+
+Debug: Project-> jobb egérgomb -> run as -> run configurations -> Arguments fül: --debug
+	Részletesebben ír mit csinál és mit hogyan köt össze.

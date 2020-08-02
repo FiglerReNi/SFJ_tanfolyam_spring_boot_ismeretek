@@ -1,17 +1,14 @@
 Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
 
-@Value - ha egy változó értékét az application.yaml/properties fájlból olvassuk ki, így jelöljük, hogy ott keresse.
-	pl:@Value("${HomeController.msg}")
-
 @SpringBootApplication - az osztály neve fölé jön, ez az egyik legismertebb, jelzi hogy ez egy spring boot applikáció (a main függvényt tartalmazó osztálynál használjuk).
 	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
-		- @Configuration
-		- @EnableAutoConfiguration
+		- @Configuration: ez az osztály képes bean-eket regisztrálni
+		- @EnableAutoConfiguration - ez jelzi a springnek, hogy amit lehet állítson be magától.
 		- @ComponentScan: Ez arra jó, hogy az adott package-ben megvizsgáltatja a containerrel az összes java osztályt, hogy bean-e valamelyik, ha igen bekerül azok közé amikre figyel a container. Megmondhatjuk azt is, hogy más packagekben is keressen.
 		
 @RestController - az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. A container is tud róla. Kap egy requestet és bármilyen választ tud rá adni: xml, json, html stb.
 
-@RequestMapping("/") - útvonalat határozok meg vele, metódus fölé jöhet, ha ezt az útvonalat írja be a felhasználó, akkor hívódik meg a függvény.
+@RequestMapping("/") - útvonalat határozok meg vele, metódus fölé jöhet, ha ezt az útvonalat írja be a felhasználó, akkor hívódik meg a függvény. Ezt egy osztály fölé is tehetjük.
 
 Container: SpringApplication.run(SpringProjectApplication.class, args) ---> ennek a visszatérési értéke a container.
 		   Adattípusa: ApplicationContainer
@@ -31,12 +28,19 @@ A bean-eknek van életciklusuk, ezt nevezzük scope-nak, 5 féle lehet:
 	session: egy embert ismer fel és hozzá köt egy babot. Webshopoknál jó, ha ugyanaz az ember frissíti a böngészőt nem példányosít újra és veszik el amit berakott a kosárba, mint ha request scope lenne.
 	globalSession: portleteknél használjuk.
 A bean-eknek beállíthatjuk, hogy lazy initialization mode-juk legyen, ami azt jelenti, hogy amikor létre jön az egész szerver, akkor a container ne hozza létre ezt a bean-t. Csak akor hozza létre amikor először szükség van rá.
-Ha POJO-t hozunk létre, ott az osztály fölé nem írunk annotációt, de a @SpringBootApplication annotációval ellátott osztályban a main fölött létrehozhatunk egy bean objektumot a POJO-ból.
+Ha POJO-t hozunk létre, ott az osztály fölé nem kötelező írnunk annotációt, de a @SpringBootApplication annotációval ellátott osztályban a main fölött létrehozhatunk egy bean objektumot a POJO-ból.
 	
 Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a container-nek kezelnie kell. Éa a @Autowired annotációval látjuk el, hogy tudja a container, hogy ezen a helyen kell gondolskodnia az objektumról.
 3 fajtája van:
 - változóént - nehezebb tesztelni
 - setterben - általában ezt használjuk
 - konstruktorban
+
+@Value - ha egy változó értékét az application.yaml/properties fájlból olvassuk ki, így jelöljük, hogy ott keresse.
+	pl:@Value("${HomeController.msg}")
+
+@EnableConfigurationProperties - ezzel engedélyezzük a csoportos konfigurációt, hogy pl egy pojo-nál ha több értéket aarunk kiolvasni a properties-ből ne kelljen egyesével a @Value-val. A POJO-nak bean-nek kell lennie. A main osztályon kell a @EnableConfigurationProperties annotáció: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel.
+
+@ConfigurationProperties - ezzel mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből.
 
 
