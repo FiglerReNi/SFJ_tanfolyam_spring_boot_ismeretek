@@ -6,12 +6,15 @@ ProductionServer: Live szerver, kész produktum van rajta, ezt érik el a felhsz
 
 Projekt felépítése: 
 MVC:
-	- Nézet(View): html, css, js
+	- Nézet(View): -static: image, css, js
+				   -templates: html thymeleaf-el
 	- Controller: két része lesz:
 						- Controller: információ begyűjtése és visszavitele a nézet felé
 							alap: nézetet keres amit visszaad, oldalakra irányít
 							rest: adatot ad vissza egyből, json, xml
 						- Service: üzleti logika, kalkulációk, számítások a kapott adatokból, még mielőtt elküldenénk az adatbázisnak vagy mielőtt visszaküldenénk.
+						- Domain: ebbe kerülnek a POJO-kalkulációk
+						- Repository: az adatbázissal kommunikál
 	- Modell
 Ennek megfelelően létrehozunk egy fő packaget, és ez alatt létrehozunk sub package-ket, hogy külön tudjuk tenni a controllert és a service-ket. Azért csináljuk így, mert a componentscan csak az adott package-ben keresi a beaneket, ha nem írjuk felül. Így egy package-ben lesznek de mégis külön logikailag.						
 	

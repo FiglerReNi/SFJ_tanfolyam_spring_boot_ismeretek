@@ -12,3 +12,44 @@ Weblaprendszerekhez a sima Controller - nézet párost szokták használni, mive
 API-okhoz a RestController-t, mert ott elég adatot visszaadni sok esetben. Pl. json, xml stb.
 
 API - olyan alkalmazások, amiket mások meg tudna hívni. Pl egy árfolyam kereső, ami megkeresi a legjobb árfolyamot, de nem egy honlapra vezeti ki, hanem más alkalmazások tudják meghívni (web jar-ban kell megcsinálni). Ilyenek a maven central repositoryban lévő meghívható alkalmazások is, pl. jdbc
+
+3. példa: templates mappába csinálunk nézeteket és ezt használjuk Controllerrel, ahonnan dinamius adatokat tudunk átadni.
+	A kettő közötti kapcsolathoz keretrendszereket használunk:
+		- JSP
+		- GSP
+		- Velocity
+		- Freemarker
+		- Thymeleaf (ezt használjuk)
+		
+Thymeleaf:
+	pom.xml-be kell dependencyként: 
+		- projekt létrehozásakor kiválaszthatjuk
+		- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		  </dependency>
+		- ha nem használunk devToolst akkor application.properties: spring.thymeleaf.cache = false ---> nem fog cachelni a 	böngésző.
+		- xmlns:th="http://www.thymleaf.org ---> html tagbe kell
+	A templates mappába kell legyenek a html fájlok
+	Ahhoz, hogy ezt elérjük kell a Controller. A kommunikáció a nézet és controller között egy Model objektum segítségével történik, amit biztosít a framework.
+	Tagek:  th:text="${}"
+			th:utext="${}" --->html tartalmú szöveghez
+			th:href="@{}"
+			th:each="story : ${stories}" ---> for ciklus a html-be
+		    th:text="${#dates.format(eredeti_datum, 'yyyy.MM.dd')}"
+
+Internationalization: 
+	i18n (többnyelvűsítés)
+	A honlap automatikusan képes felismerni a böngésző automatikus nyelvét.
+	resources alá:
+		- messages.properties --> ez az alap
+		- messages_en.properties --> minden kívánt nyelvhez létrehozok egyet
+		- html-ben jelölni kell azokat az elemeket ahol használjuk:
+			th:text="#{yourIp}"
+		- application.properties-ben beállíthatom melyik nyelv legyen az alap:
+			spring.mvc.locale-resolver=fixed ---> ez mindig kötelező
+			spring.mvc.locale=hu ---> ha ez nincs veszi a böngészőjét
+		böngészőben nyelvállítás: about:config --->
+			intl.accept_languages
+			intl.hyphenation-alias.hu-*
+			
