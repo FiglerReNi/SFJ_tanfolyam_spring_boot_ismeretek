@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
 	  xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns="http://www.thymeleaf.org">
+	  xmlns:th="http://www.thymleaf.org">
 	  
 	<head>
 		<meta charset="utf-8" />
@@ -11,7 +11,9 @@
     	<!--  Itt adom meg a dinamikus adatot, ami felülírja a statikust -->
     	<title th:text="${pageTitle}">Napi SFJ</title>
     	
-    	<link rel="stylesheet" href="../static/css/main.css"/>
+    	<!-- Itt adhatom meg a projekten belüli útvonalat, ha eltér pl a designer által használttól, csak a statichoz képest kell
+    		megadni az útvonalat -->
+    	<link rel="stylesheet" th:href="@{css/main.css}" href="../static/css/main.css"/>
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
     	<link href='https://fonts.googleapis.com/css?family=Calibri' rel='stylesheet' type='text/css' />
     	<link href='https://fonts.googleapis.com/css?family=Exo' rel='stylesheet' type='text/css' />
@@ -32,31 +34,32 @@
 		                <a class="navbar-brand" href="#">napiSFJ.com</a>
 		            </div>
 		            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-5">
-		                <p class="navbar-text navbar-right">IP címed: <a href="#" class="navbar-link">127.0.0.1</a></p>
+		                <p class="navbar-text navbar-right" th:text="#{yourIp}">IP címed: <a href="#" class="navbar-link">127.0.0.1</a></p>
 		            </div>
 		        </div>
 		    </nav>
 				   
-		    <article>
+		    <article th:each="story:${stories}">
 		        <header>
-		            <h1>Ez itt a cím</h1> 
-		            <p>Posted on September 31, 2015 at 10:00 PM</p>
-		        </header>		    
-		 	    <section >
+		            <h1 th:text="${story.title}">Ez itt a cím</h1> 
+		            <p th:text="${#dates.format(story.posted, 'yyyy.MM.dd HH:mm')}">Posted on September 31, 2015 at 10:00 PM</p>
+		        </header>		
+		        <!-- Ha html-t is tartalmaz a szöveg akkorr utext kell -->    
+		 	    <section th:utext="${story.content}">
 		            <p>Carl összeráncolta szemöldökét, és felnézett az égre. Bármennyire is erőlködött, nem tudott egyetlen másodpercnél tovább a nap felé nézni. Az égitest vakító ereje bevilágította a környéket, emellett pedig szúrós meleg pontként szurkálta halántékát mind a két oldalról.</p>
 		      		<p> -Feladom… - gondolta, majd tekintetét a játszótérre emelte. Innen a nyolcadik emeletről tökéletesen be lehetett látni az egész grundot. A háztömbök által körülölelt focipályán a gyerekek nyüzsögtek reggeltől estig. Ha az egyiket elhívták a szülei, szinte azonnal jött a helyére egy másik. A hajnalban még négy fős csapatok délutánra nyolc tagúra dagadtak, naplemente előtt pedig már nem is lehetett pontosan megállapítani, hogy melyik térfelen hány gyerek szaladgál fel-alá.</p>
 		      		<p></p>
 		        </section>		        
 		        <footer>
 		            <address>
-		                Beküldte: <span >Anonymous</span>
+		                Beküldte: <span th:text="${story.author}">Anonymous</span>
 		            </address>
 		        </footer>
 		        <hr/>
 		    </article>
 		
 		    <footer>
-		        <p>Készült az San Franciscoból Jöttem csapata megbízásából</p>
+		        <p th:text="#{footerText}">Készült a San Franciscoból Jöttem csapata megbízásából</p>
 		    </footer>
 		
 		</div>
