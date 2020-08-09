@@ -1,0 +1,14 @@
+Több lehetőség is van, attól függően, hogy statikus vagy dinamikus datok kerülnek a honlapomra.
+Amikor létrehozok egy alap projektet és semmi nincs benne még, akkor a localhost:8080-re egy error page jön be, hiszen nem csináltunk még semmilyen nézetet, amit meg tudna jeleníteni. Az alap hiba oldalt lehet módosítani. Ezt látja a felhasználó is, ha olyan aloldalt keres ami nem létezik.
+A nézet részei a resources mappába kerülnek:
+	- static: ebbe minden ami statikus, pl. kép, video, css, html is ha statikus weboldalt hozunk létre. Ami ebben a mappában van az meg tud jelenni a felhasználónál. Az index.html ha van mindig a főoldal lesz, amit megtalál egyből a localhost:8080.
+	
+1. példa: Static mappában index.html ---> megjelenik felületen a tartalma
+	      Majd létrehozunk egy RestController-t ami képes útvonalakat figyelni a RequestMapping-el és választ adni rájuk. Ebben az esetben,ha ez is a gyökér könyvtárat figyeli, a RestController nyer, és ez fog megjelenni a statikus html-el szemben.
+
+2. példa: Ha sima Controllert használunk RequestMapping-el, akkor sem fog megjelenni a statikus index.html, hanem ilyenkor a return után írt névvel keres egy nézetet a program amit megjeleníthet. Ha ilyen nincs akkor hibát ad.
+
+Weblaprendszerekhez a sima Controller - nézet párost szokták használni, mivel formázott html-t kell nagyrészt visszaadni.
+API-okhoz a RestController-t, mert ott elég adatot visszaadni sok esetben. Pl. json, xml stb.
+
+API - olyan alkalmazások, amiket mások meg tudna hívni. Pl egy árfolyam kereső, ami megkeresi a legjobb árfolyamot, de nem egy honlapra vezeti ki, hanem más alkalmazások tudják meghívni (web jar-ban kell megcsinálni). Ilyenek a maven central repositoryban lévő meghívható alkalmazások is, pl. jdbc
