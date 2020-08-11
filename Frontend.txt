@@ -1,4 +1,4 @@
-Több lehetőség is van, attól függően, hogy statikus vagy dinamikus datok kerülnek a honlapomra.
+﻿Több lehetőség is van, attól függően, hogy statikus vagy dinamikus datok kerülnek a honlapomra.
 Amikor létrehozok egy alap projektet és semmi nincs benne még, akkor a localhost:8080-re egy error page jön be, hiszen nem csináltunk még semmilyen nézetet, amit meg tudna jeleníteni. Az alap hiba oldalt lehet módosítani. Ezt látja a felhasználó is, ha olyan aloldalt keres ami nem létezik.
 A nézet részei a resources mappába kerülnek:
 	- static: ebbe minden ami statikus, pl. kép, video, css, html is ha statikus weboldalt hozunk létre. Ami ebben a mappában van az meg tud jelenni a felhasználónál. Az index.html ha van mindig a főoldal lesz, amit megtalál egyből a localhost:8080.
@@ -31,7 +31,7 @@ Thymeleaf:
 		- ha nem használunk devToolst akkor application.properties: spring.thymeleaf.cache = false ---> nem fog cachelni a 	böngésző.
 		- xmlns:th="http://www.thymleaf.org ---> html tagbe kell
 	A templates mappába kell legyenek a html fájlok
-	Ahhoz, hogy ezt elérjük kell a Controller. A kommunikáció a nézet és controller között egy Model objektum segítségével történik, amit biztosít a framework.
+	Ahhoz, hogy ezt elérjük kell a Controller. A kommunikáció a nézet és controller között egy Model objektum segítségével történik, amit biztosít a framework. A Local is ilyen eszköz, ezzel információat írhatunk ki a localunkról. Pl. alapértelmezett nyelv, vagy ország.
 	Tagek:  th:text="${}"
 			th:utext="${}" --->html tartalmú szöveghez
 			th:href="@{}"
@@ -49,7 +49,8 @@ Internationalization:
 		- application.properties-ben beállíthatom melyik nyelv legyen az alap:
 			spring.mvc.locale-resolver=fixed ---> ez mindig kötelező
 			spring.mvc.locale=hu ---> ha ez nincs veszi a böngészőjét
-		böngészőben nyelvállítás: about:config --->
+		böngészőben nyelvállítás: about:config ---> 
+			(firefox)(chromban így már nincs)
 			intl.accept_languages
 			intl.hyphenation-alias.hu-*
-			
+	A messages.propertiesnek lehet baja az ékezetes karakterekkel, notepad++ ban kell átállítani a fájl karakterkódolását.		
