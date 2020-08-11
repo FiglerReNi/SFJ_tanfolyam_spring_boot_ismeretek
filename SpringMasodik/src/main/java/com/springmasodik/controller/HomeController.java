@@ -2,6 +2,7 @@ package com.springmasodik.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,12 @@ public class HomeController {
 	/*templates mappában keresi a stories nézetet*/
 	@RequestMapping("/")
 	/*a Model az átjáró a backend és a frontend között*/
-	public String stories(Model model) {
+	public String stories(Model model, Locale locale) {
 		/*itt határozzuk meg milyen értéket akarunk átadni a html-nek és annak mi lesz az id-ja*/
 		model.addAttribute("pageTitle", "Minden napra egy sztori");
 		model.addAttribute("stories", getStories());
+		//ezzel tudunk kiiratni adatokat a localunkról
+		System.out.println(String.format("Request received. Language: %s, Country: %s", locale.getLanguage(), locale.getCountry()));
 		return "stories";
 	}
 	
