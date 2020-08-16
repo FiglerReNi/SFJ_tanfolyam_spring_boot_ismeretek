@@ -23,4 +23,6 @@ Hiba attribútumai
 	és összeállítjuk a sajár hibaüzenetünket, a saját hibaoldalunkkal.
 	
 Ha mindkét megoldás él a kódban a Controller-es az erősebb és ez fog működni
+
+Kivételkezelés: Ha egy lekérdezés nem ad vissza eredményt, ha egy útvonalból várunk paramétert ami nincs, akkor ezeket az esetekez kezeljük kivételkezeléssel, Létrehozhatunk neki egy saját osztályt ha pl egységesen akarjuk kezelni, és akkor a eletkezés helyén dobjuk ezeket a kivételeket (throw new Exception) az osztály pedog kezeli.
 	

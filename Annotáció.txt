@@ -43,4 +43,6 @@ Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a con
 
 @ConfigurationProperties - ezzel mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből.
 
+@PathVariable(value="id") --> ezzel szedem ki az útvonalban átadott paramétereket. A függvény paraméterei közé írjuk
 
+@ExceptionHandler(Exception.class) ---> kivételkezelő (elkapó) függvény fölé
