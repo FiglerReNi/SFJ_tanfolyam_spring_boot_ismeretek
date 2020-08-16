@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springmasodik.domain.Story;
@@ -47,5 +51,25 @@ public class HomeController {
 		
 		return stories;
 	}
+	
+	//Az útvonalakban lehetnek paraméterek átadva, amikkel tudunk dolgozni (mint php-ben a Get-el url-be írt dolgok)
+	@RequestMapping(path = {"/user", "/user/{id}"})
+	public String searchForUser(@PathVariable(value="id", required=false) String id) throws Exception{
+		//kezelnünk kell ha valamiért mégsincs az id az útvonalban
+		if(id == null) {
+			//eldobjuk és majd kezeljük egy osztállyal
+			throw new Exception("Nincs id megadva!");
+		}
+		return "stories";
+	}
+	
+	//kezelhetjük az adott helyen vagy külön osztályban is, utóbbi jobb megoldás
+    /*
+	@ExceptionHandler(Exception.class)
+	public String exceptionHandler(HttpServletRequest ra, Exception ex, Model model) {
+		model.addAttribute("exception", ex);
+		return "exceptionHandler";
+	}
+	*/
 
 }
