@@ -1,0 +1,2 @@
+INSERT INTO BLOGGER (name, age) VALUES ('FReni', 25)
+INSERT INTO TORTENET (title, content, posted, blogger_id) VALUES ('Teszt cím', 'Teszt tartalom', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni'))
