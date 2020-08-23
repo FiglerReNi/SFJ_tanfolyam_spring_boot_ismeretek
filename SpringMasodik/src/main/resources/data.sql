@@ -1,2 +1,7 @@
 INSERT INTO BLOGGER (name, age) VALUES ('FReni', 25)
-INSERT INTO TORTENET (title, content, posted, blogger_id) VALUES ('Teszt cím', 'Teszt tartalom', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni'))
+INSERT INTO BLOGGER (name, age) VALUES ('FReni2', 25)
+INSERT INTO TORTENETEK (cim, content, posted, blogger_id) VALUES ('Teszt cÍm', 'Teszt tartalom', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni'))
+INSERT INTO TORTENETEK (cim, content, posted, blogger_id) VALUES ('Teszt cÍm3', 'Teszt tartalom3', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni'))
+INSERT INTO TORTENETEK (cim, content, posted, blogger_id) VALUES ('Teszt cÍm4', 'Teszt tartalom4', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni2'))
+INSERT INTO TORTENETEK (cim, content, posted, blogger_id) VALUES ('Teszt cÍm5', 'Teszt tartalom5', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni2'))
+INSERT INTO TORTENETEK (cim, content, posted, blogger_id) VALUES ('Szia', 'Teszt tartalom5', CURRENT_DATE(), (SELECT id FROM BLOGGER WHERE name = 'FReni2'))

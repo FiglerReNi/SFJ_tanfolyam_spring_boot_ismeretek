@@ -2,6 +2,7 @@ package com.springmasodik.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 //ez jelzi hogy ez az osztály egy adatbázis táblát képvisel
-@Entity
+@Entity(name="tortenetek")
 public class Tortenet {
 	//minden adattábla oszlopnak kell legyen itt egy változója
 	//autoincrement
@@ -17,7 +18,10 @@ public class Tortenet {
 	//primary key
 	@Id
 	private Long id;
+	@Column(name="cim")
 	private String title;
+	//@Column(length=1000)
+	@Column(columnDefinition="TEXT")
 	private String content;
 	private Date posted;
 	/*Foreign key létrehozása: OnetoMany kapcsolat, egy bloggerhez több story tartozhat és a story táblában lesz blogger_id, így ebben a kapcsolatban a 
@@ -27,6 +31,13 @@ public class Tortenet {
 	private Blogger blogger;
 	
 	private Tortenet() {}
+
+	public Tortenet(String title, String content, Date posted, Blogger blogger) {
+		this.title = title;
+		this.content = content;
+		this.posted = posted;
+		this.blogger = blogger;
+	}
 
 	public String getTitle() {
 		return title;

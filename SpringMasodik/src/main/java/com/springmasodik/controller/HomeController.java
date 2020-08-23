@@ -2,49 +2,40 @@ package com.springmasodik.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springmasodik.domain.Story;
-import com.springmasodik.domain.Tortenet;
-import com.springmasodik.repository.TortenetRepository;
+import com.springmasodik.service.TortenetService;
 
 @Controller
 public class HomeController {
-	/*Adat kiolvasása adatbázisból. Kell hozzá az adott osztály repositoryja, hiszen ez a híd az adatbázis felé az entity-n keresztül
-	 * Dependency Injectionnal adom meg*/
-	
-	private TortenetRepository tortenetRepo;
+	private TortenetService tortenetService;
 	
 	@Autowired
-	public void setTortenet(TortenetRepository tortenetRepo) {
-		this.tortenetRepo = tortenetRepo;
-	}
-	
-	/*A repo findAll functionja egy Iterable típust ad vissza, de nekünk List kell, ezért a reponkban felül tudjuk írni, hogy mivel térjen vissza, mivel 
-	 * az list a szűkebb adattípus*/
-	private List<Tortenet> getTortenet(){
-		List<Tortenet> tortenetek = tortenetRepo.findAll();		
-		return tortenetek;
-		
+	public void setTortenetService(TortenetService tortenetService) {
+		this.tortenetService = tortenetService;
 	}
 	
 	@RequestMapping("/tortenetek")
-		public String tortenetek(Model model, Locale locale) {
+		public String tortenetek(Model model) {
 			model.addAttribute("pageTitle", "Minden napra egy sztori");
-			model.addAttribute("tortenetek", getTortenet());
+			model.addAttribute("tortenetek", tortenetService.getTortenet());
 			return "tortenetek";
 		}
 	
+	@RequestMapping("/tortenet")
+	public String tortenet(Model model) {
+		model.addAttribute("pageTitle", "Minden napra egy sztori");
+		model.addAttribute("tortenet", tortenetService.getEgyTortenet());
+		return "tortenet";
+	}
+
+
 	/*templates mappában keresi a stories nézetet*/
 	@RequestMapping("/")
 	/*a Model az átjáró a backend és a frontend között*/
@@ -92,6 +83,18 @@ public class HomeController {
 			throw new Exception("Nincs id megadva!");
 		}
 		return "stories";
+	}
+	
+	/*cím alaoján keresünk az adattáblában és megjelentjük*/
+	@RequestMapping(path = {"/title", "/title/{title}"})
+	public String searchForTitle(@PathVariable(value="title", required=false) String title, Model model) throws Exception{
+		//kezelnünk kell ha valamiért mégsincs az id az útvonalban
+		if(title == null) {
+			//eldobjuk és majd kezeljük egy osztállyal
+			throw new Exception("Nem adtál meg címet!");
+		}
+		model.addAttribute("tortenet", tortenetService.getSpecificTortenet(title));
+		return "tortenet";
 	}
 	
 	//kezelhetjük az adott helyen vagy külön osztályban is, utóbbi jobb megoldás
