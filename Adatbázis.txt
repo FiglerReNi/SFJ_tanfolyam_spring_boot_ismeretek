@@ -28,6 +28,7 @@ Fogalmak:
 	Minden szerver újraindításkor elvesznek belőle az adatok, mivel ez egy belső adatbázis ami a szerveren belül él.
 	Ezért kezdő adatokat adhatunk meg a kódban:
 		- data.sql fájlban, ezt induláskor automatikusan beolvassa
+		- ha pl. bejövő adatokat szeretnénk elmenteni ami az űrlapról jön 
 	Működéshez application.properties: (ezzel állítjuk be, hogy elérjük böngészőben az adatbázist és hogy milyen útvonalon. Ezt csak teszteléshez szabad használni éles környezetben nem.)
 		- spring.h2.console.enabled=true
 		- spring.h2.console.path=/db
@@ -35,7 +36,7 @@ Fogalmak:
 				spring.datasource.url=jdbc:h2:file:/C:/Program Files/Java/SpringProjekt/SpringMasodik/test
 				
 Adatbázis - Kód: 
-	- Ha mr van meglévő adatbázis, hozzá tudjuk kötni a kódot
+	- Ha már van meglévő adatbázis, hozzá tudjuk kötni a kódot
 	- Ha nincs, tudjuk azt mondani a kódban, hogy mi legyen az adatbázis definíciója, és ha még nincs létrehozza
 	- Az osztály (POJO) és a benne lévő osztályváltozók képviselik az adattáblát és benne az oszlopokat. Az ilyen POJO az entitás.
 	- A sorok az adattáblában pedig objektumok a kódban.
@@ -43,6 +44,7 @@ Adatbázis - Kód:
 Entity:
 	- Az Entitásban ugynazok az osztályváltozók kellenek mint amilyen oszlopok vannak az adattáblában. Mivel ott használunk id-t, ezért az Entitásban is kell. Jelölnünk kell a primary key-t, foreign key meghatározásokat, auto incrementet is.
 	- Az Entitásnak mindig kell legyen egy private üres construktora. + @Entity annotáció az osztály fölött
+	- Létrehozhatunk + public onstruktorokat is ha szükséges
 	- ID autoincrement (@GeneratedValue(strategy=GenerationType.IDENTITY) annotációval állítjuk be), primary key (@Id annotációval)
 	- Forign key-eket is meg kell határoznunk ha vannak.
 	
@@ -52,3 +54,15 @@ Repository:
 		CrudRepository-t, amiben egy csomó előre megírt dolog van amit tudunk használni és módosítani
 	- Az adatbázissal kommunikál, ide kerülnek az sql-ek, illetve beépített sql lehetőségek
 	
+Adatáramlás:
+Adatbázis -> Entity -> Repository -> Service -> Controller -> Felület
+
+JPA szintaktika:
+	Felülírások, az Entity-ben használhatunk más elnevezéseket, mint az adattáblában:
+		- adattábla neve más mint az osztályé: @Entity(name="stories")
+		- oszlopok neve: @Column(name="cím")
+		- adattípus, hossz: @Column(length = 1000)
+							@Column(columnDefinition="TEXT")
+	Válogatás:
+		- findFirstByOrderPostedDesc() dátum szerint az első
+		- címre lehessen keresni (pl útvonalból jön a cím és innen tudjuk kiszedni)

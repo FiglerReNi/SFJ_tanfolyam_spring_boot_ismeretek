@@ -56,3 +56,5 @@ Dependency Injection: Ezzel adjuk át azokon a helyeken az objetumot, ahol a con
 Foreign key annotációk:
 	@ManyToOne
 	@OneToMany(mappedBy = "")
+	
+@PostConstruct - ha azt szeretnék hogy egy metódus csak egyszer,a service létrejöttekor fusson le, ilyenkor nem is kell meghívni, hanem automatikusan lefut. Mivel a Service singleton ezért egyszer fog csak létrejönni, mindenki ugyanazt a példányt kapja meg. Dependency injectionnal tesszük bele a controllerben, ott sem hozunk létre tehát újat.
