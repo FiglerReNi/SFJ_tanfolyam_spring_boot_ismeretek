@@ -1,5 +1,3 @@
-/*Inversion of Control szerint Dependency Injectionnal (konstruktor vagy setter alapon lehet az átadás) helyesen az előbbi
-példa osztály */
 package springalapfogalmak.classes;
 
 public class LanyUj {
