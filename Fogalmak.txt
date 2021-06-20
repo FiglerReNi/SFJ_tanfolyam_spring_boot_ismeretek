@@ -1,16 +1,6 @@
 
 
-Groovy: Ez is egy programozási nyelv, szintén byte kódot készít amit a JVM értelmezni tud, mint a java.
-		Kevesebb kódot kell írni, pl visszatérő értéknél nem kell használni a return szót.
-		Letöltjük a legfrisebb verziót
-		Command line-on keresztül használható program, így csinálunk hozzá környezeti változót.
-		Ha ez megvan groovy -v paranccsal ellenőrizhetjük a verziót.
-		
-
-		
-Spring Boot CLI: command line eszköz a spring boothoz, ezt is letöltjük. The Spring Boot CLI (Command Line Interface) is a command line tool that you can use to quickly prototype with Spring. It lets you run Groovy scripts, which means that you have a familiar Java-like syntax without so much boilerplate code. You do not need to use the CLI to work with Spring Boot, but it is definitely the quickest way to get a Spring application off the ground. 
-spring help paranccsal ellenőrizzük, hogy működik-e, ehhez is megcsináljuk a környezeti változót.
-Előnye, hogy prototipusokat nagyon gyorsan létre lehet vele hozni.
+	
 
 start.spring.io: másik út, ahogyan egy projektet nagyon gyorsan összeállíthatunk. Csak ki kell töltenünk mit szeretnénk, milyen függőségekre van szükségünk, és legenerálja az alapot.
 
