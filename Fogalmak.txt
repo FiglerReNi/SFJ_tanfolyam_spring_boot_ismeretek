@@ -1,18 +1,4 @@
-﻿Spring Boot: Springre épülő másik keretrendszer. A Springben nagyon sok mindent be kell állítani xml konfiguráción keresztül. A Spring Boot-ban nagyon sok mindent készen kapunk, amin persze lehet változtatni.
-	- könnyen válogatható modulok
-	- egyértelmű belépőpont (public static void main)
-	- beépített Tomcat
 
-Webservice: xml/json válaszokat képes adni, a webapplication és az adatbázis között áll. Vagy egy mobilalkalmazás esetén közvetlenül a kliens (mobilalkalmazás) és az adatbázis között. Előnye: van egy weblapunk, egy mobilalkalmazásunk és mindkettő ugyanabból az adatbázisból dolgozik, mindkettő ugyanattól a webservicetől tud adatot kérni. A webservice kommunikál az adatbázissal és visszaadja a kért adatot. Közvetlenül az adatbázishoz így nem adunk hozzáférést. Egységes autentikáció lehet minden felületről, lehet rendszerezni ki hogyan fér hozzá az adatbázishoz. Ki milyen adatokat kérhet le.
-
-Webapplication: a klienssel áll kapcsolatban -> pl. böngésző és html+css+js választ ad.
-
-Spring Boot CLI: command line eszköz amin keresztül gyorsan lehet projekteket készíteni.
-
-Microservice: A webserviceben lévő funkciókat szétszedjük  ún. microservicekre, így külön lehet őket kezelni, például teljesítmény/erőforrás szempontjából (skálázhatóság), vagy hogy milyen kliensről érjék el. Önmagában egy egység, egy adott feladatért felelős kis webservice. Így loosly coupled lesz a rendszerünk, ezeket tesztelni is sokkal könnyebb, hiszen a microservicek önmagukban egy egységek.
-	- Webservice elérése két féleképp (ezek eljárások, hogy adatot kérhessünk a szervertől):
-		- rest
-		- soap (protokoll)
 
 Groovy: Ez is egy programozási nyelv, szintén byte kódot készít amit a JVM értelmezni tud, mint a java.
 		Kevesebb kódot kell írni, pl visszatérő értéknél nem kell használni a return szót.
