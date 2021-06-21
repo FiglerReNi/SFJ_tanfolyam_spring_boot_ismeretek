@@ -1,14 +1,4 @@
-Annotációkkal jelöljük a speciális blokkokat, ezzel tudjuk kiemelni.
 
-@SpringBootApplication - az osztály neve fölé jön, ez az egyik legismertebb, jelzi hogy ez egy spring boot applikáció (a main függvényt tartalmazó osztálynál használjuk).
-	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
-		- @Configuration: ez az osztály képes bean-eket regisztrálni
-		- @EnableAutoConfiguration - ez jelzi a springnek, hogy amit lehet állítson be magától.
-		- @ComponentScan: Ez arra jó, hogy az adott package-ben megvizsgáltatja a containerrel az összes java osztályt, hogy bean-e valamelyik, ha igen bekerül azok közé amikre figyel a container. Megmondhatjuk azt is, hogy más packagekben is keressen.
-		
-@RestController - az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. A container is tud róla. Kap egy requestet és bármilyen választ tud rá adni: xml, json, html stb.
-
-@RequestMapping("/") - útvonalat határozok meg vele, metódus fölé jöhet, ha ezt az útvonalat írja be a felhasználó, akkor hívódik meg a függvény. Ezt egy osztály fölé is tehetjük.
 
 Container: SpringApplication.run(SpringProjectApplication.class, args) ---> ennek a visszatérési értéke a container.
 		   Adattípusa: ApplicationContainer
