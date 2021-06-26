@@ -48,9 +48,7 @@ public class SpringProjectApplication {
 	}
 	
 	public static void main(String[] args) {		
-		//ennek a visszatérési értéke a container
 		ApplicationContext container = SpringApplication.run(SpringProjectApplication.class, args);
-		//Kiolvassuk miért felel a container
 		String[] beanArray = container.getBeanDefinitionNames();
 		Arrays.sort(beanArray);
 		for(String name:beanArray) {
