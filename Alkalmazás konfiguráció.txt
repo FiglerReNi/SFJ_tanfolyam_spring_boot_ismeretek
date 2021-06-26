@@ -1,12 +1,6 @@
 
 		 
-Csoportos konfiguráció: Ha például egy pojo változóihoz állítunk be értékeket a properties-ben, meg lehet csinálni azt, hogy nem egyesével kötjük össze a @Value annotációval. Fontos, hogy a propertiesben a változó nevek ugyanígy szerepeljenek, mint a pojo-ban, vagy kötőjellel: firstName vagy first-name. Ahhot, hogy működjön a POJO-nak bean-nek kell lennie. @EnableConfigurationProperties annotáció: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel. @ConfigurationProperties-el mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből.
-@ConfigurationProperties(prefix = "person")
-Setteren keresztül injektálja be az értékeket.
-A propertiesben egy másik property értékére is hivatkozhatunk és fűzhetünk is hozzá.
-	person-plus.firstname = Renáta
-	person-plus.lastname = ${person-plus.firstname} Figler
-A pom.xml-hez is hozzá kell adni egy dependency-t, hogy működjön. Ez az újabb verziókban alapból benne van.
+
 
 Profilok: Különböző környezetekben különböző módon használjuk az alkalmazásunkat. Pl. más adatbázishoz kapcsolódunk teszten mint élesen. Vagy azt szeretnénk ha működne oracle és postgresql-el is a programunk, és kiveszi a properties-ből a megfelelő beállításokat. Igy mindkét környezetnek kell építeni egy profilt, hogy működjön. Minden környezetnek csinálunk egy application.properties fájlt. Az eredetiben pedig beállítjuk, hogy melyik aktív. Amelyiket aktívra állítom, onnan fog értékeket venni.
 A profilokból az értékeket használhatjuk osztályokon belül, ha bean-ek, vagy a mainben is létrehozhatunk egy bean példányt az osztályból, ha alapból nem az.
