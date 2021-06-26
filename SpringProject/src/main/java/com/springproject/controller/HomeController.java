@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.springproject.service.PeldaService;
 import com.springproject.service.SpyGirlService;
 
-//Ez is bean lesz (speciális)
 @RestController
 public class HomeController {
 	//kiolvasás yaml fájl értéket
@@ -22,10 +21,7 @@ public class HomeController {
 	private int teszt2;
 	@Value("${HomeController.tartomany}")
 	private int teszt3;
-	/*tightly coupled, ha így csináljuk minden alkalommal új objektum jön létre,amikor meghívódik az osztály. 
-	Jelen esetben a restcontroller singleton ezért egyetlen egyszer fog létrejönni, ez így nem jó, mert mi sessiononként szeretnénk
-	új SpyGirl objektumot
-	Nem használjuk ki a container lehetőségeit és a dependency injectiont
+	/*
 	private SpyGirl spicy = new SpyGirl();*/
 	
 	/*Dependency Injection 1.
@@ -53,7 +49,6 @@ public class HomeController {
 	}*/
 	
 
-	/*Ezzel adom meg, hogy milyen útvonalnál hívódjon meg ez a függvény*/
 	@RequestMapping("/")
 	public String index() {
 		//return "Szia Reni";
