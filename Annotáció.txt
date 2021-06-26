@@ -1,8 +1,7 @@
 
 
 
-@Value - ha egy változó értékét az application.yaml/properties fájlból olvassuk ki, így jelöljük, hogy ott keresse.
-	pl:@Value("${HomeController.msg}")
+
 
 @EnableConfigurationProperties - ezzel engedélyezzük a csoportos konfigurációt, hogy pl egy pojo-nál ha több értéket aarunk kiolvasni a properties-ből ne kelljen egyesével a @Value-val. A POJO-nak bean-nek kell lennie. A main osztályon kell a @EnableConfigurationProperties annotáció: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel.
 
