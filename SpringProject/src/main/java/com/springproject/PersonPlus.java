@@ -3,15 +3,10 @@ package com.springproject;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-//itt mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből
 @ConfigurationProperties(prefix = "person-plus")
-//A csoportos konfigurációhoz (hogy ki tudjunk olvasni a propertiesből értékeket) bean-nek kell lennie
 @Component
 public class PersonPlus {
 
-	//Értékeket állítunk be hozzájuk a properties fájlban., de meg lehet csinálni úgy az összekötést, hogy nem egyesével kell a @Value
-	//annotációval. Fontos, hogy a propertiesben a változó nevek ugyanígy szerepeljenek, vagy kötőjellel:
-	// firstName vagy first-name
 	private String firstName;
 	private String lastName;
 	private int age;
@@ -21,7 +16,6 @@ public class PersonPlus {
 	public PersonPlus() {}
 	
 	public PersonPlus(String firstName, String lastName, int age, String address, String phoneNumber) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
