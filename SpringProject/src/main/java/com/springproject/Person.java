@@ -21,7 +21,6 @@ public class Person {
 	}
 
 	public Person(String name, int age) {
-		super();
 		this.name = name;
 		this.age = age;
 	}
