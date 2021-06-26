@@ -3,9 +3,7 @@
 
 
 
-@EnableConfigurationProperties - ezzel engedélyezzük a csoportos konfigurációt, hogy pl egy pojo-nál ha több értéket aarunk kiolvasni a properties-ből ne kelljen egyesével a @Value-val. A POJO-nak bean-nek kell lennie. A main osztályon kell a @EnableConfigurationProperties annotáció: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel.
 
-@ConfigurationProperties - ezzel mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből.
 
 @PathVariable(value="id") --> ezzel szedem ki az útvonalban átadott paramétereket. A függvény paraméterei közé írjuk
 
