@@ -1,7 +1,3 @@
-/* Futtatás:  Run As -> Spring Boot App
- * Megcsinál mindent az Ide, elindítja a tomcat szervert is.
- * Minden változtatás után újra kell fordítani a kódot.*/
-
 package com.springproject;
 
 import java.util.Arrays;
@@ -22,13 +18,10 @@ import org.springframework.context.annotation.Profile;
 @EnableConfigurationProperties
 @ComponentScan({"com.springproject", "com.beansearch"})
 @SpringBootApplication
-/*Az alsó hármat váltja ki a legfelső*/
 /*@Configuration
 @EnableAutoConfiguration
 @ComponentScan*/
 public class SpringProjectApplication {
-
-	//POJO-ból bean objektum
 	@Bean
 	public Person giveMePerson() {
 		return new Person("Gyula", 20);
