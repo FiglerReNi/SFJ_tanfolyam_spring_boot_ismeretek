@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Profile;
 
 //Felül lehet írni, ha az alapbeállításokon kell módosítani, megmondhatjuk, hogy mit hagyjon ki az autokonfigurációból
 //@EnableAutoConfiguration(exclude=)
-//Ezzel az annotációval engedélyezzük a csoportos konfigurációt
 @EnableConfigurationProperties
 @ComponentScan({"com.springproject", "com.beansearch"})
 @SpringBootApplication
@@ -48,7 +47,6 @@ public class SpringProjectApplication {
 			System.out.println(name);
 		}
 		
-		//Ilyenkor a toString-et adja vissza, ami minden objektumnek van és módosítható
 		System.out.println(container.getBean("personPlus"));
 		
 		System.out.println(container.getBean("person"));
