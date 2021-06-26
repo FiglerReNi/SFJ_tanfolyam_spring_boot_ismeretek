@@ -20,7 +20,6 @@ import org.springframework.context.annotation.Profile;
 //@EnableAutoConfiguration(exclude=)
 //Ezzel az annotációval engedélyezzük a csoportos konfigurációt
 @EnableConfigurationProperties
-//Ha más package-ban is meg akarjuk keresni a bean-eket, akkor felül kell írnunk a @ComponentScan annotációt, hiába van benne egyébként a @SpringBootApplication-ban
 @ComponentScan({"com.springproject", "com.beansearch"})
 @SpringBootApplication
 /*Az alsó hármat váltja ki a legfelső*/
