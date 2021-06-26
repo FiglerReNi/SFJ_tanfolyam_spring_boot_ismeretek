@@ -1,4 +1,0 @@
-Az annotáció helyett ezt is használhatjuk, de a SpringBoot kifejezetten annotációkat használ.
-Alapjai:
-Létezik egy xml fájl a bean-eknek, ami tartalmazza a leírásukat és hogy hogyan kell injektálni őket.
-Példa: https://www.tutorialspoint.com/spring/spring_applicationcontext_container.htm
