@@ -11,7 +11,6 @@ public class PersonProfile {
 		}
 
 		public PersonProfile(String text) {
-			super();
 			this.text = text;
 		}
 
