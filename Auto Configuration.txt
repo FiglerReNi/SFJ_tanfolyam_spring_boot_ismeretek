@@ -1,4 +1,0 @@
-auto configuration: alap beállítások, amivel megkapjuk a projektet generáláskor.
-	@EnableAutoConfiguration - ez jelzi a springnek, hogy amit lehet állítson be magától.
-	Minden felülírható, módosítható.
-	A konfigurációs leírás megtalálása: a legenerált .jar filet átírjuk .zip kiterjesztésűre, majd icsomagoljuk, hogy bele tudjunk nézni. --> BOOT-INF mappa --> lib --> spring-boot-2.3.1.RELEASE (zip és kicsomagol ezt is) --> META-INF --> spring.factories --> ebben további hivatkozások vannak. Alap esetben nem nyúlunk ebbe bele. De ha szükséges felül lehet írni a @EnableAutoConfiguration-nel.
