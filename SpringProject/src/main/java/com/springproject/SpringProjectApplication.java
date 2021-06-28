@@ -25,8 +25,7 @@ public class SpringProjectApplication {
 	public Person giveMePerson() {
 		return new Person("Gyula", 20);
 	}
-	/*Profilok használata, ha a POJO nem bean, ha csinálunk egy harmadik profil nevű bean-t is, ahol nincs @Profile annotáció, akkor
-	 * azt választja a program, az felülírja az egyéb Bean-eket.*/
+	
 	@Bean(name = "profil")
 	@Profile("dev")
 	public PersonProfile giveMePersonDev() {
