@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-//Felül lehet írni, ha az alapbeállításokon kell módosítani, megmondhatjuk, hogy mit hagyjon ki az autokonfigurációból
 //@EnableAutoConfiguration(exclude=)
 @EnableConfigurationProperties
 @ComponentScan({"com.springproject", "com.beansearch"})
