@@ -1,29 +1,7 @@
 
 
-3. példa: templates mappába csinálunk nézeteket és ezt használjuk Controllerrel, ahonnan dinamius adatokat tudunk átadni.
-	A kettő közötti kapcsolathoz keretrendszereket használunk:
-		- JSP
-		- GSP
-		- Velocity
-		- Freemarker
-		- Thymeleaf (ezt használjuk)
 		
-Thymeleaf:
-	pom.xml-be kell dependencyként: 
-		- projekt létrehozásakor kiválaszthatjuk
-		- <dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		  </dependency>
-		- ha nem használunk devToolst akkor application.properties: spring.thymeleaf.cache = false ---> nem fog cachelni a 	böngésző.
-		- xmlns:th="http://www.thymleaf.org ---> html tagbe kell
-	A templates mappába kell legyenek a html fájlok
-	Ahhoz, hogy ezt elérjük kell a Controller. A kommunikáció a nézet és controller között egy Model objektum segítségével történik, amit biztosít a framework. A Local is ilyen eszköz, ezzel információat írhatunk ki a localunkról. Pl. alapértelmezett nyelv, vagy ország.
-	Tagek:  th:text="${}"
-			th:utext="${}" --->html tartalmú szöveghez
-			th:href="@{}"
-			th:each="story : ${stories}" ---> for ciklus a html-be
-		    th:text="${#dates.format(eredeti_datum, 'yyyy.MM.dd')}"
+
 
 Internationalization: 
 	i18n (többnyelvűsítés)
