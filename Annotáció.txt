@@ -5,9 +5,7 @@
 
 
 
-@PathVariable(value="id") --> ezzel szedem ki az útvonalban átadott paramétereket. A függvény paraméterei közé írjuk
 
-@ExceptionHandler(Exception.class) ---> kivételkezelő (elkapó) függvény fölé
 
 @Entity ---> ez jelzi, hogy egy osztály egy adatbázis táblát képvisel
 
