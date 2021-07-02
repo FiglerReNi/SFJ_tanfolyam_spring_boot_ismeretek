@@ -8,11 +8,7 @@
 	Ezért kezdő adatokat adhatunk meg a kódban:
 		- data.sql fájlban, ezt induláskor automatikusan beolvassa
 		- ha pl. bejövő adatokat szeretnénk elmenteni ami az űrlapról jön 
-	Működéshez application.properties: (ezzel állítjuk be, hogy elérjük böngészőben az adatbázist és hogy milyen útvonalon. Ezt csak teszteléshez szabad használni éles környezetben nem.)
-		- spring.h2.console.enabled=true
-		- spring.h2.console.path=/db
-				felületen URL: saját URL-t kell csinálnunk az application.propertiesben adható meg:
-				spring.datasource.url=jdbc:h2:file:/C:/Program Files/Java/SpringProjekt/SpringMasodik/test
+
 				
 Adatbázis - Kód: 
 	- Ha már van meglévő adatbázis, hozzá tudjuk kötni a kódot
