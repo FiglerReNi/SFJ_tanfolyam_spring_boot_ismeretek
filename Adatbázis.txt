@@ -1,31 +1,10 @@
-Két új dependency kell a projektbe
- - jpa
-	 <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-			<version>2.1.4.RELEASE</version>
-     </dependency>
- - h2
-	 <dependency>
-	    <groupId>com.h2database</groupId>
-	    <artifactId>h2</artifactId>
-		<scope>runtime</scope>
-		<version>1.4.199</version>
-	 </dependency>
+
  
-Fogalmak:
-	ORM: object relational mapping
-		 Az objektumok átalakíthatóak a táblázat egyes soraivá
-		 A class pontos mása a táblázatnak
+
 		 
-	JPA: A JDBC-t automatizálja a Híbernate segítségével. Egy interface, amely meghatározza a szabályokat, feltételeket amik mellett a Hibernate használható.
+
 	
-	Hibernate: JDBC-t használ, automatizálja az adatbázis műveleteket, a JPA eszköze, implementációja.
-	
-	JDBC: Kapcsolat és kommunikáció az adatbázissal sql nyelvet használva.
-	
-	H2 - Embedded database, ez a Spring Boot beéptett, belső adatbázisa. Teszteléshez, projekt összeállításhoz jó, ha kész minden átmenthető belőle éles adatbázisba.
-	Minden szerver újraindításkor elvesznek belőle az adatok, mivel ez egy belső adatbázis ami a szerveren belül él.
+
 	Ezért kezdő adatokat adhatunk meg a kódban:
 		- data.sql fájlban, ezt induláskor automatikusan beolvassa
 		- ha pl. bejövő adatokat szeretnénk elmenteni ami az űrlapról jön 
