@@ -5,23 +5,10 @@
 
 	
 
-	Ezért kezdő adatokat adhatunk meg a kódban:
-		- data.sql fájlban, ezt induláskor automatikusan beolvassa
-		- ha pl. bejövő adatokat szeretnénk elmenteni ami az űrlapról jön 
 
-				
-Adatbázis - Kód: 
-	- Ha már van meglévő adatbázis, hozzá tudjuk kötni a kódot
-	- Ha nincs, tudjuk azt mondani a kódban, hogy mi legyen az adatbázis definíciója, és ha még nincs létrehozza
-	- Az osztály (POJO) és a benne lévő osztályváltozók képviselik az adattáblát és benne az oszlopokat. Az ilyen POJO az entitás.
-	- A sorok az adattáblában pedig objektumok a kódban.
+
 	
-Entity:
-	- Az Entitásban ugynazok az osztályváltozók kellenek mint amilyen oszlopok vannak az adattáblában. Mivel ott használunk id-t, ezért az Entitásban is kell. Jelölnünk kell a primary key-t, foreign key meghatározásokat, auto incrementet is.
-	- Az Entitásnak mindig kell legyen egy private üres construktora. + @Entity annotáció az osztály fölött
-	- Létrehozhatunk + public onstruktorokat is ha szükséges
-	- ID autoincrement (@GeneratedValue(strategy=GenerationType.IDENTITY) annotációval állítjuk be), primary key (@Id annotációval)
-	- Forign key-eket is meg kell határoznunk ha vannak.
+
 	
 Repository:
 	- Ilyen package-t hozunk létre és ebben lesznek ezek a fájlok. 
