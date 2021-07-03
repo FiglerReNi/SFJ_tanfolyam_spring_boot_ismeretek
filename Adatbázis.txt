@@ -9,15 +9,7 @@
 
 	
 
-	
-Repository:
-	- Ilyen package-t hozunk létre és ebben lesznek ezek a fájlok. 
-		- Minden entity-hez külön repository tartozik, ezek a fájlok nem classok, hanem interfacek lesznek, amik kiterjesztik a 
-		CrudRepository-t, amiben egy csomó előre megírt dolog van amit tudunk használni és módosítani
-	- Az adatbázissal kommunikál, ide kerülnek az sql-ek, illetve beépített sql lehetőségek
-	
-Adatáramlás:
-Adatbázis -> Entity -> Repository -> Service -> Controller -> Felület
+
 
 JPA szintaktika:
 	Felülírások, az Entity-ben használhatunk más elnevezéseket, mint az adattáblában:
