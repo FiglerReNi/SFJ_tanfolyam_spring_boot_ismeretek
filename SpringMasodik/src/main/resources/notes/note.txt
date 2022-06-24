@@ -1,0 +1,85 @@
+https://docs.spring.io/spring-data/jpa/docs/2.3.x-SNAPSHOT/reference/html/#reference
+
+ORM: object relational mapping
+	  Az objektumok átalakíthatóak a táblázat egyes soraivá
+    A class pontos mása a táblázatnak
+
+JPA:
+	Kapcsolat a kód és az adatbázis között.
+	Sql lekérdezések nélkül működik (automatizált)
+	Leghíresebb implementációja a hybernate, a háttérben ez is a jdbc-t használja
+	A JDBC-t automatizálja a Híbernate segítségével. Egy interface, amely meghatározza a szabályokat, feltételeket amik mellett a Hibernate használható.
+	Hibernate: JDBC-t használ, automatizálja az adatbázis műveleteket, a JPA eszköze, implementációja.
+	Gyors, egyszerű a használata, viszont a lekérdezések sok esetben lassabbak lehetnek, hiszen egy plusz réteg ami használja a jdbc-t. De nem minden esetben igaz, hogy lassabb, jpa chachelése miatt van amikor ez a gyorsabb. Helyzettől függ.
+  Az adatbázis POJO-k-on annotációkat használunk és így tudja létrehozni az adatbázis tábla szerkezetet a jpa kód oldalról.
+
+Haználat:
+  	CrudRepository kiterjesztésével
+  		○ findAll()
+  		○ findFirstByOrderBy<mezo>Desc()
+  		○ findBy<mezo>(String <mezo>)
+  			▪ Ha az adott adattábla szerint keresünk elég a mezőnév
+  		○ findAllBy<adattábla><mezo>OrderByPostedDesc(String name)
+  			▪ A adattáblában keresünk, de B adattábla feltétele alapján (pl történetet keresünk blogger alapján - idegen kulcs kapcsolat van közöttük)
+  		○ findAllBy<adattábla><mezo>IgnoreCaseOrderByPostedDesc(String name)
+  			▪ Case-insensitive lesz
+
+Entity:
+    POJO:
+    	• Plain Old Java Object
+    	• osztályváltozókat, getter/settert és konstruktort tartalmaznak maximum
+    	• nincs bennük általában semmilyen egyéb függvény/metódus
+    	• Az adatbázishoz csinált pojo speciális -> entitásnak nevezzük, az osztály (POJO) és a benne lévő osztályváltozók képviselik az adattáblát és benne az oszlopokat, a sorok az adattáblában pedig objektumok a kódban.
+    Példa:
+    	• Egy adatbázis tábla neve a users, ennek egy sorából csinálunk objektumot a User osztállyal
+    	• A tábla minden oszlopához kell csinálni osztályváltozót
+      • Egy rekord (sor) képvisel egy objetumot
+	• A jpa az entitykből automatikusan megcsinálja az adatbázis szerkezetet
+	• Az Entitásban ugynazok az osztályváltozók kellenek mint amilyen oszlopok vannak az adattáblában.
+	• Mivel ott használunk id-t, ezért az Entitásban is kell. Jelölnünk kell a primary key-t, foreign key meghatározásokat, auto incrementet is.
+	• Az Entitásnak mindig kell legyen egy üres construktora. + @Entity annotáció az osztály fölött
+	• Létrehozhatunk + public konstruktorokat is ha szükséges
+	• ID autoincrement (@GeneratedValue(strategy=GenerationType.IDENTITY) annotációval állítjuk be), primary key (@Id annotációval)
+	• Forign key-eket is meg kell határoznunk ha vannak.
+		○ @OneToMany(mappedBy = "blogger")
+		○ @ManyToOne
+		○ @ManyToMany:
+			Ilyenkor úgynevezett join table-t hozunk létre:
+				□ egyik oldal:
+				@ManyToMany(mappedBy="roles")
+					private Set<User> users = new HashSet<User>();
+				□ másik oldal:
+				@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+					@JoinTable(
+							name="users_roles",
+							joinColumns= {@JoinColumn(name="user_id")},
+							inverseJoinColumns= {@JoinColumn(name="role_id")}
+							)
+					private Set<Role> roles = new HashSet<Role>();
+	• Oszlop név módosítás: @Column(name="cím")
+	• Oszlopban tárolható adat hossza: @Column(length = 1000)
+	• Oszlop adattípus módosítása: @Column(columnDefinition="TEXT")
+	• Oszlop értéke nem lehet null: @Column(nullable=false)
+	• Oszlop értéke egyedi: @Column(unique=true)
+	• Támogatja a tranzakció kezelést @Transaction annotációval. Vagyis, ha egy művelet 3-4 adatbázis műveletből állna, vagy mind megtörténik, vagy egyik sem.
+
+H2:
+	○ Ez a Spring Boot beéptett, belső adatbázisa. Teszteléshez, projekt összeállításhoz jó, ha kész minden átmenthető belőle éles adatbázisba.
+	○ Minden szerver újraindításkor elvesznek belőle az adatok, mivel ez egy belső adatbázis ami a szerveren belül él.
+	○ Ezért kezdő adatokat adhatunk meg a kódban:
+			□ - data.sql fájlban, ezt induláskor automatikusan beolvassa
+			□ - ha pl. bejövő adatokat szeretnénk elmenteni ami az űrlapról jön
+	○ Működéshez application.properties: (ezzel állítjuk be, hogy elérjük böngészőben az adatbázist és hogy milyen útvonalon. Ezt csak teszteléshez szabad használni éles környezetben nem.)
+		§ spring.h2.console.enabled=true
+	Amikor elindítom a projektet lent kiírja milyen path-on érem el az adatbázist, ezt lehet módosítani
+		§ spring.h2.console.path=/db
+		§ spring.datasource.platform=h2
+	○ Amikor elindítom a projektet lent kiírja milyen url-t kell a consolon beírni a jdbc url mezőbe. Ezt felül lehet írni, saját URL-t kell csinálnunk az application.propertiesben adható meg:
+	Pl.:
+		§ spring.datasource.url=jdbc:h2:mem:testdb
+	Megadthatunk saját file útvonalat a projekten belül, ilyenkor nem vesznek el újraindításkor az adatok, mert az adatbázis az alkalmazás mellett van egy file-ben.
+	Jpa-val használva megadhatjuk, hogy első futtatásnál create legyen (hozza létre az entiyket), utána csak update pl.
+	Jdbc-vel használva schema.sql en adhatjuk meg a létrehozandó adatbázis szerkezetet.
+		§ spring.datasource.url=jdbc:h2:file:/C:/Program Files/Java/SpringProjekt/SpringMasodik/test
+
+
