@@ -171,4 +171,17 @@ Pom.xml:
   	• Tartalmaz metaadatokat (pl hogy melyik készüljön el, .jar vagy .war)
     • <parent> tag mondja meg, hogy milyen magot szeretnénk használni a spring bootból. ---> egy már meglévő kódállományt terjesztünk ki
 
+Környezetek:
+  Fejlesztői környezet:
+  	Ahol készül a kód. Integrated Development Environment. A különböző IDE-k.
+  Repository:
+  	 A kód módosításait a fejlesztők felkommitolják egy repositoryba. Ezek a különböző verzió kezelők, pl GIT.
+  DevServer:
+  	Ennek hozzáférése van a verziókezelő rendszerhez, észleli ha változás történik, maven segítségével készít egy .jar filet. Ezt lehet szabályozni, hogy például félóránként ellenőrizze volt-e változás, és az akkori álatpotból csinál egy verziót. (Ezt mi Jenkins --> kézzel csináljuk). A .jar file-t futtatni is tudja. (maven clean install, java -jar xy.jar parancsok segítségével történnek ezek). Ezen a szerveren lehet tesztelni. UNIT tesztek vannak erre, ezek leellenőrzik, hogy minden funkció továbbra is működik-e. Ha valami elromlott tud emailt küldeni róla, és meg tudja mondani azt is hol a baj. Ki lehet próbálni kézzel is.
+  TestServer:
+  	Opcionális, nem mindig csinálják. Ha minden rendben van a másik helyen átmegy ide a verzió, és itt lehet egyéb teszteknek még alávetni, pl stressz teszt. Itt lehet nyílt tesztet csinálni, ahol emberek tesztelik le a programot, akár a megrendelő is.
+  ProductionServer:
+  	Live szerver, kész produktum van rajta, ezt érik el a felhsználók, ennek van domain neve.
+
+
 

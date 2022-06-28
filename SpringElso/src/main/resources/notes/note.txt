@@ -12,3 +12,16 @@ Frontend:
     	Majd létrehozunk egy RestController-t ami képes útvonalakat figyelni a RequestMapping-el és választ adni rájuk. Ebben az esetben,ha ez is a gyökér könyvtárat figyeli, a RestController nyer, és ez fog megjelenni a statikus html-el szemben.
     2. példa:
       Ha sima Controllert használunk RequestMapping-el, akkor sem fog megjelenni a statikus index.html, hanem ilyenkor a return után írt névvel keres egy nézetet a program amit megjeleníthet. Ha ilyen nincs akkor hibát ad.
+
+Képek:
+  Ha menü elemeknek szeretnénk képeket használni, vagy menü elem elé, érdemes png-ben tenni:
+  	• csak azt jeleníti meg ahol van valami a képen
+  	• független a háttértől
+  	• ahol nincs semmi, oda nem rak be magától egy fehér vagy fekete hátlapot
+  A képeket
+  	• behúzhatjuk a netről
+  		○ ha nincs netkapcsolt vagy kikapcsolják a szervert, törlik a képet, nem lesz elérhető számunkra
+  	• tárolhatjuk a program mappájában és használhatjuk innen
+  		○ adott esetben nem a legfrisebb képet használjuk
+  	• legjobb ha úgy írjuk meg a programot, hogy ellenőrizze a neten a képet és ha van friss verzió tároljuk el majd használjuk ezt az eltárolt verziót
+
