@@ -164,4 +164,4 @@ i18n:
   			(firefox)(chromban így már nincs)
   			intl.accept_languages
   			intl.hyphenation-alias.hu-*
-  A messages.propertiesnek lehet baja az ékezetes karakterekkel, notepad++ ban kell átállítani a fájl karakterkódolását.
+      ○ A messages.propertiesnek lehet baja az ékezetes karakterekkel, notepad++ ban kell átállítani a fájl karakterkódolását.
