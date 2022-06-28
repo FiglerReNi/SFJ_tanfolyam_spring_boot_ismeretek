@@ -1,0 +1,46 @@
+Haladó Java Fogalmak
+  Loosely coupled (lazán összekapcsolt):
+  	Minden ami külön részekre bontható, önmagában képviseljen egy kódrészletet. Önmagában alkosson egy egységet és legyen újrafelhasználható, akár egy másik projektben is.
+  Tightly coupled:
+  	Amikor nem használjuk a dependency injectiont és az oszályon belül példányosítunk egy használni kívánt másik osztályt injektálás helyett, ha így csináljuk minden alkalommal új objektum jön létre,amikor meghívódik az osztály.
+  	Rossz műödést is eredményezhet, mert egy rest controllerben ami singleton pl. csak egyszer jön létre. De lehet nekünk session alapon kellene, pl minden felhasználóhoz. Ezért a példányosítás nem megoldás itt.
+  Container:
+  	Spring biztosítja ezt. Tud bizonyos objektumokról, amelykről ő gondoskodik és hozza létre ha szükség van rá.
+  IoC (Inversion of Control):
+  	• Feleslegesen létrehozott objetumoknak az elkerülése a container segítségével.
+  	• IOC nélkül:
+  	Ha ezzel a módszerrel programozzuk le a példa lányt és a példa labdát, akkor minden esetben el fog készülni a labda, akkor is ha adott esetben nincs is szükség rá, mert a lány osztályába példányosítjuk, hogy tudja használni. A labda ugyan külön objektum, de ha azt akarjuk, hogy tudjuk itt hasznáni beleírjuk ebbe az objektumba.
+  	Hiba ezzel: Meghívjuk az objektumot, majd miután nem hasznájuk átkerül a carbage collectorba, ha megint szükség lesz egy ilyen objektumra, újra meghívjuk és a labdából is új készül, pedig a régi is jó lenne, ha tudnánk használni valahogyan.
+  	Megoldás: Van egy úgynevezett container, ami képes tárolni a labdánkat és ő adja át a lány objektumnak, ha szükség van rá. Így csak annyi jön létre amennyi tényleg kell. Ha megszűnik a lány objektum a labda a containerben marad és következő alkalommal innen kerül az új lány objektumhoz. Így sokkal kevesebb objektumot kell létrehozni, kevesebb helyet foglal a heapben. A container tud azokról az objetumokról amiket figyelnie kell és amikről ő gondoskodik. Így tudjuk azt is figyelni és szabályozni meddig éljen egy objektum. Pl. megadhatjuk hogy minden nap legyen belőle új létrehozva.
+  	Ez a folyamat az inversion of control lényege.
+  Dependency Injection:
+  	Az inversion of control egyik megjelenési formája. Lehetővé teszi, hogy a container legyárthassa, kézben tarthassa és odaadhassa (injetálhassa) az objektumoknak azokat az objektumokat amire szükségük van. Az átadás konstruktor alapon vagy setter alapon történik a springben, illetve a változó definiálásakor is lehet.
+  	Ezzel adjuk át azokon a helyeken az objetumot, ahol a container-nek kezelnie kell. Éa a @Autowired annotációval látjuk el, hogy tudja a container, hogy ezen a helyen kell gondolskodnia az objektumról.
+  	3 fajtája van:
+  		○ változóént - nehezebb tesztelni
+  		○ setterben - általában ezt használjuk
+  		○ konstruktorban
+  Container:
+  	• SpringApplication.run(SpringProjectApplication.class, args) ---> ennek a visszatérési értéke a container.
+  	• Adattípusa: ApplicationContainer
+  	• Kiolvashatjuk a listát, amely classokból létrejött objektumokról gondoskodnia kell. Nagyon sok előre regisztrált bean lesz benne, amiket nem mi hoztunk létre, hanem készen kaptuk.
+  	• A bean nevek a listában ugyanazok mint az osztály nevek, csak kis betűvel kezdődnek.
+  	• Ezt lehet módosítani az annotációban, pl @Service("ujnev"); @Component("ujnev").
+  Beans (babok):
+  	A container-ben regisztrálva vannak azok az osztályok amelyek objektumairól neki kell gondoskodnia (hogyan kell létrehozni, milyen módon kell foglalkozni velük, mikor kell törölni őket). Ezeket az osztályokat jelölik az ún. bean-ek.
+  	Ahhoz hogy valami bean legyen el kell látni annotációval.
+  	Ilyen:
+  		@RestController ---> speciális bean
+  		@Component @Scope("session")  ---> így jelezzük hogy bean és hogy mi az életciklusa
+  		@Service ---> a service-k megklönböztetett annotációja. A Servicek az MVC struktúra controller rétegéhez tartoznak és a kalkulációkat, számításokat végzik.
+  	A bean-eknek van életciklusuk, ezt nevezzük scope-nak, 5 féle lehet:
+  		○ singleton: ez az alap, ha nem határozzuk meg máshogy, ez azt jelenti, hogy egy darab jön belőle létre. pl RestController
+  		○ prototype: mindig minden egyes alkalommal új objektumot készít.
+  		○ requestet: minden egyes http leérdezéssel új példányt készít. Pl honlapfrissítésenként.
+  		○ session: egy embert ismer fel és hozzá köt egy babot. Webshopoknál jó, ha ugyanaz az ember frissíti a böngészőt nem példányosít újra és veszik el amit berakott a kosárba, mint ha request scope lenne.
+  		○ globalSession: portleteknél használjuk.
+  	A bean-eknek beállíthatjuk, hogy lazy initialization mode-juk legyen, ami azt jelenti, hogy amikor létre jön az egész szerver, akkor a container ne hozza létre ezt a bean-t. Csak akor hozza létre amikor először szükség van rá.
+  	Ha POJO-t hozunk létre, ott az osztály fölé nem kötelező írnunk annotációt.
+  	De a @SpringBootApplication annotációval ellátott osztályban a main fölött létrehozhatunk egy bean objektumot a POJO-ból.
+
+

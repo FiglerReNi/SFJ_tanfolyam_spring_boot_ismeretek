@@ -165,3 +165,83 @@ i18n:
   			intl.accept_languages
   			intl.hyphenation-alias.hu-*
       ○ A messages.propertiesnek lehet baja az ékezetes karakterekkel, notepad++ ban kell átállítani a fájl karakterkódolását.
+
+Hibakezelés:
+  Javan belül van a Throwable osztály, amin belül az Error és Exception
+  	•  Erroral nem foglalkozunk: rajtunk kívül álló okok: pl felhasználó gépe amin fut a JVM, nem rendelkezik elég memóriával, ami kell az én programomhoz.
+  	•  Exception: Két részből állnak
+                  a. Checked Exceptions --> fordítási idejű hibák, ezeket le kell kezelni, különben nem fordul le akód
+                  b. Unchecked Exceptions --> futás idejű hibák
+
+  	a. Checked:
+  		Osztályok lehetnek úgy megírva hogy bizonyos esetekben dobnak exceptiont, ezt kötelező lekezelni.
+  		Módja:
+  		try-catch-finally
+  			○ A finally nem kötelező, akár a try akár a catch futott le, amit ide írok az jön utána, mindig lefut
+  			○ Egy try-hoz több catch ág is tartozhat
+  		Throws
+  			○ Ez arra jó, hogy átdobom a kivételt a másik szintnek, tehát nem az adott osztályban kezelem le, hanem ahol meghívom a függvényt
+  	b. Unchecked
+  		Olyat akarok kiiratni ami nincs, nem fog lefutni
+  		Pl.:
+  		○ hivatkozás egy olyan tömb elemre ami már nincs pl.
+  		○ null pointer exception: Létrehozok egy új Cat-et , de nem állítok be neki nevet--> null lesz. Majd ezt megpróbálom összehasonlítani egy névvel
+  if(cat.getName().equals("Aladár")) --> itt valójában a null-ra hívok equals-t
+  		Kezelés módja
+  			Try-catch
+  			Plusz viszgáló fetételek, nem üres-e vmi pl.
+  			throws
+  Nagyon sok féle Exception lehet, létre lehet hozni saját exception osztályokat is, de mindegyiknek az őse a sima Exception lesz.
+
+Kivételkezelés:
+  Ha egy lekérdezés nem ad vissza eredményt, ha egy útvonalból várunk paramétert ami nincs, akkor ezeket az esetekez kezeljük kivételkezeléssel.
+  A függvény neve után kell a throws Exception tag, ha benne exception dobunk
+  	1. módszer
+  	Létrehozhatunk neki egy saját osztályt ha pl egységesen akarjuk kezelni, és akkor a keletkezés helyén dobjuk ezeket a kivételeket (throw new Exception) az osztály pedig kezeli az összeset
+  import org.springframework.ui.Model;
+  import org.springframework.web.bind.annotation.ControllerAdvice;
+  import org.springframework.web.bind.annotation.ExceptionHandler;
+  @ControllerAdvice
+  public class ExceptionGeneral {
+  	@ExceptionHandler
+  	public String exceptionHandler(Exception ex, Model model) {
+  		model.addAttribute("exception", ex);
+  		return "exceptionHandler";
+  	}
+  }
+  2. módszer
+  Az adott controlleren belül hozunk létre kivételkezelőt
+  @ExceptionHandler(Exception.class)
+  public String exceptionHandler(HttpServletRequest ra, Exception ex, Model model) {
+  	model.addAttribute("exception", ex);
+  	return "exceptionHandler";
+  }
+
+Error page:
+  Hibakezelés:
+  - Ha például olyan oldal elérést írunk be ami nem létezik, automatikusan kapunk egy hiba oldalt a java-tól.
+  - Ezt lehet módosítani, html formázott környezetbe tenni, plusz adatokkal bővíteni
+  Hiba attribútumai
+  	• idő (mikor történt a hiba)
+  	• status (hiba kód)
+  	• error (not found)
+  	• message
+  	• path (milyen útvonalhoz kapcsolódóan)
+  	•
+  1. Egyszerű mód:
+  	Beépülő megoldás: a templates-be létrehozunk egy error nevű templatet.
+  	Ha ez létezik, akkor hiba esetén automatikusan ezt jeleníti meg a spring boot. Nem kell hozzá semmi más.
+  	Automatikusan használható értéke:
+  		th:text="${error}"
+  		th:text="${message}"
+  		th:text="${timestamp}
+  		th:text="${path}
+  		th:text="${status}"
+  2. Részletes hibakezelő:
+  	Ha nem csak az error-t és message-t akarjuk használni, hanem részletesebb adatokat szeretnénk, vagy magyar leírást, akkor bele lehet nyúlni az automatikus hibakezelőbe.
+  	Kell hozzá egy controller
+  	Ebben megadjuk, hogy hiba esetén milyen útvonalra irányítsuk a felhasználót, majd ezt egy Requestmapping-el elkapjuk és összeállítjuk a sajár hibaüzenetünket, a saját hibaoldalunkkal.
+  Ha mindkét megoldás él a kódban a Controller-es az erősebb és ez fog működni
+
+
+

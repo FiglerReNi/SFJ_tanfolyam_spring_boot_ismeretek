@@ -1,0 +1,174 @@
+Annotáció Fogalma:
+  • A @-al keződő kulcsokat annotációnak nevezzük.
+  • A Java programozási nyelvben annotációnak olyan nyelvi elemet nevezünk, amely lehetővé teszi a metaadatok beépítését forráskódba.
+  • Az anotációkat a Java 5.0-s verziójánál vezették be.
+  • Az annotációk a programkód elemeihez rendelhetők (csomagokhoz, típusokhoz, metódusokhoz, attribútumokhoz, konstruktorokhoz, lokális változókhoz), plusz információt hordoznak a Java fordító ill. speciális eszközök számára.
+  • Az annotáció @ jellel kezdődik, majd ehhez kapcsolódik a neve.
+  • Annotációkkal jelöljük a speciális blokkokat, ezzel mondjuk meg a springnek, hogy ezekkel valamilyen dolga van, valahogyan működnek.
+  Saját Annotáció létrehozása
+  	○ Létrehozzuk egy metódus fölött, ahol használni szeretnénk
+  	○ Create annotation
+  	○ Új osztályt hoz neki létre az intelliJ, megadhatjuk, hogy melyik package-ban legyen
+  	○ Az osztály fölött annotációkkal tudjuk konfigurálni:
+  		▪ @Target(ElementType.METHOD) - milyen elemek felett lehessen használni, pl osztály, method stb.
+  		▪ @Retention(RetentionPolicy.RUNTIME) - milyen környezetben működjön pl. Futási időben
+
+Annotáció Gyűjtemény:
+  @Override
+  	Ezzel jelzem magamnak is hogy ez egy olyan dolog, ami az ősben is van de felül írtam.
+  @WebServlet(name = "feldolgozas", urlPatterns = {"/feldolgozas/*"})
+  	Útvonal megadása java-ban keretrendszer nélkül
+  @SpringBootApplication
+  	Az osztály neve fölé jön, ez az egyik legismertebb, jelzi hogy ez egy spring boot applikáció (a main függvényt tartalmazó osztálynál használjuk).
+  	Három másik annotációt helyettesít, amiet együtt szoktunk használni:
+  		Ø  @Configuration: ez az osztály képes bean-eket regisztrálni
+  		Ø  @EnableAutoConfiguration - ez jelzi a springnek, hogy amit lehet állítson be magától. Minden felülírható, módosítható.
+  			auto configuration: alap beállítások, amivel megkapjuk a projektet generáláskor.
+  			A konfigurációs leírás megtalálása: a legenerált .jar filet átírjuk .zip kiterjesztésűre, majd kicsomagoljuk, hogy bele tudjunk nézni. --> BOOT-INF mappa --> lib --> spring-boot-2.3.1.RELEASE (zip és kicsomagol ezt is) --> META-INF --> spring.factories --> ebben további hivatkozások vannak. Alap esetben nem nyúlunk ebbe bele. De ha szükséges felül lehet írni a @EnableAutoConfiguration-nel.
+  			@EnableAutoConfiguration(exclude=) - megadhatjuk, hogy mit hagyjon ki az auto configuration-ból.
+  		Ø  @ComponentScan: Ez arra jó, hogy az adott package-ben megvizsgáltatja a containerrel az összes java osztályt, hogy bean-e valamelyik, ha igen bekerül azok közé amikre figyel a container. Megmondhatjuk azt is, hogy más packagekben is keressen:  @ComponentScan({"com.springproject", "com.beansearch"})
+  @RestController
+  	Az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. A container is tud róla, tehát ez is egy bean. Kap egy requestet és bármilyen választ tud rá adni: xml, json, html stb. Singleton, mindig egy példány jön létre belőle
+  @Cotroller
+  	Az osztály neve fölé jön. Az ezzel jelölt egy speciális osztály, jelezzük a spring számára, hogy hogyan kezelje. Az ezzel az annotációval ellátott osztályok képesek üzenetet küldeni és fogadni. Válaszként egy nézetet tud megjeleníteni. Ezt használjuk webapplicationok-nél. Singleton, mindig egy példány jön létre belőle.
+  @RequestMapping("/")
+  	Útvonalat határozok meg vele, metódus fölé jöhet, ha ezt az útvonalat írja be a felhasználó, akkor hívódik meg a függvény. Ezt egy osztály fölé is tehetjük.
+  @RequestMapping(value="/reg", method=RequestMethod.POST)
+  	Megadhatjuk azt is, hogy post-ot vagy get-et várunk.
+  @PostMapping("/")
+  	Útvonalat határozunk meg vele, de azt is megmondjuk, hogy posztos kell legyen.
+  @RequestBody
+  	Restcontroller esetén, amikor nem a thymeleaftől kapunk post requestet, akkor a kérés body részét ezzel tudjuk kivenni.
+  @ModelAttribute
+  	A thymefeaf-től így tudunk visszavenni egy kitöltött objektumot. Átadunk valamit a modellel, a thymeleaf pl egy formból feltölti, és ezzel az annotációval tudjuk kikérni a backend oldalon.
+  @Autowired
+  	Ezzel tudunk beinjektálni egy beant abba az osztályba, ahol használni szeretnénk.
+  @Qualifier
+  	Ezzel adhatjuk meg, ha egy interfacet injektálunk, hogy melyik osztályt akarjuk használni, azok közül amik kiterjesztik.
+  @Component
+  	Az egyszerű beaneket ezzel látjuk el. Így jelezzük a containernek, hogy bean.
+   @Scope("session")
+    Így jelezzük hogy mi egy bean  életciklusa, ha nem adjuk meg akkor az alap a singleton
+  @Service
+  	A service-k megklönböztetett annotációja. A Servicek az MVC struktúra controller rétegéhez tartoznak és a kalkulációkat, számításokat végzik. Singleton, mindig egy példány jön létre belőle. A @Autowired-el tudjuk injektálni a controllerbe, ahol használni akarjuk, így a dependency injection segítségével mindig ugyanazt a példányt használjuk.
+  @Value
+  	Ha egy változó értékét az application.yaml/properties fájlból olvassuk ki, így jelöljük, hogy ott keresse.
+  	pl:@Value("${HomeController.msg}")
+  @EnableConfigurationProperties
+  	Ezzel engedélyezzük a csoportos konfigurációt, hogy pl egy pojo-nál ha több értéket akarunk kiolvasni a properties-ből ne kelljen egyesével a @Value-val. A POJO-nak bean-nek kell lennie. A main osztályon kell a @EnableConfigurationProperties annotáció: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel.
+  @ConfigurationProperties
+  	Ezzel mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből. @ConfigurationProperties(prefix = "person")
+  @Bean
+  	Ezzel tudunk egy osztályból létrehozott objektumot bean-ként regisztrálni. A main osztályában működik, mert kell hozzá a @Configuration annotáció.
+  	El is nevezhetjük: @Bean(name = "profil")
+  @Profile("dev")
+  	Megmondhatjuk egy bean-ként regisztrált objektumnak, hogy melyik profil beállításai szerint jöjjön létre.
+  @ControllerAdvice
+  	Az általános kivételkezelő osztály fölé kell
+  @ExceptionHandler(Exception.class)
+  	Az általános kivételkezelő osztály függvényének annotációja
+  @PathVariable(value="id", required=false) String id)
+  	Útvonalban lévő paraméter kiszedéséhez kell, hogy tudjuk használni a függvényben
+  @OneToMany(mappedBy = "")
+  @ManyToOne
+  	Foreign key annotációk (JPA)
+  @ManyToMany(mappedBy="")
+  @ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+  @JoinTable
+  @JoinColumn
+  	Many to many kapcsolathoz kapcsolótábla annotációk (JPA)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  	Autoincrement lesz tőle a változó. (JPA)
+  @Id
+  	Primary key lesz tőle az adott változó. (JPA)
+  @Entity(name="")
+  	Ez jelzi, hogy egy osztály egy adatbázis táblát képvisel, megadhatjuk, hogy az adatbázisban mi legyen a tábla neve, ha eltér az osztály nevétől.  (JPA)
+  @PostConstruct
+  	Ha azt szeretnék hogy egy metódus csak egyszer,a service létrejöttekor fusson le. Ilyenkor nem is kell meghívni, hanem automatikusan lefut. Mivel a Service singleton ezért egyszer fog csak létrejönni, vagyis mindenki ugyanazt a példányt kapja meg. Dependency injectionnal tesszük bele a controllerben, ott sem hozunk létre tehát újat.
+  @Column(name="cím")
+  	Oszlop név módosítás.  (JPA)
+  @Column(length = 1000)
+  	Oszlopban tárolható adat hossza.  (JPA)
+  @Column(columnDefinition="TEXT")
+  	Oszlop adattípus módosítása.  (JPA)
+  @Column(nullable=false)
+  	Oszlop értéke nem lehet null (JPA)
+  @Column(unique=true)
+  	Oszlop értéke egyedi (JPA)
+  @FunctionalInterface
+  	Az olyan interfaceket jelöljük vele, miket lambda expression-ben használjuk, mert ezekben csak egy függvény/metódus lehet. Ez jelzi a másik fejlesztőnek, hogy ne bővítse ezt.
+  @JasonBackReference
+  	Amikor @RestControllert használunk és csak visszaadjuk az adatot akkor lehet fontos. Ha a visszaadott adat idegen kulcsot tartalmazó táblából jön, akkor egyik objektumban lesz egy beágyazott objektum a válaszban. Ezt a böngésző nem kezeli jól és végtelenítetten írja ki folyamatosan egymásba ágyazva  a két objektumot.
+  	Ennek megakadályozására használjuk ezt az annotációt. Az idegen kulcs alapjánál (mappedby fölött)  használjuk.
+  @Repository:
+  	A repository interfaceink felé helyezzük, amik a CrudRepository-t is kiterjesztik jpa esetén. JDBC esetén ezek sima classok lesznek és nem terjesztenek ki semmit.
+  @Query:
+  	Jpa esetén ezzel tudunk nativ queryt írni.
+  @EnableGlobalMethodSecurity(securedEnabled = true).
+  	A Spring Securityhez kell, ez teszi lehetővé, hogy meg tudjuk mondani melyik fajta role-al melyik útvonal érhető el.
+  @Secured(value = { "ROLE_USER" })
+  	Így adjuk meg, hogy adott útvonalat milyen role érhet el.
+  @BeforeEach
+  	 Itt megadhatunk olyan dolgokat, amiket minden egyes teszteset előtt szeretnénk lefuttatni. (Junit5)
+  @AfterEach
+  	Itt minden teszteset után lefutó dolgokat adunk meg, pl ürítjük az objektumokat. (Junit5)
+  @Test
+  @Test(expected = vartException.class )
+  	Ezzel jelöljük a teszt eseteket, és ha exception várunk. (Junit)
+  @MockBean:
+  	SprinBootban ha a tesztelendő osztályunkba injektálva van egy függőség, akkor a teszt osztályba is dependency injectionnal kell létrehoznunk a mockolt változatát. Erre van az  annotáció.
+
+Application.properties:
+  	A java kód kapcsolata a külvilággal. A kód újrafordítása nélkül változtatható. Ebben határozhatjuk meg pl. az adatbázis kapcsolódás adatait, vagy az email server adatait. A .jar file mellett szokták létrehozni. Alap esetben a .jar file is tartalmaz egyet, és ha nincs külső meghatározva, akkor az ebben lévő adatokat használja a program. De célszerű külsőt létrehozni, és a belső maximum a környezetnek megfelelő változókat hív meg a külső property file-ból.
+  	Olyan helyre célszerű tenni, ahol nem érheti el a felhasználó:
+  		○ kitesszük a .jar file mellé
+  		○ elmentem valahová a szerveren és class pathon keresztül adom meg
+  		○ környezeti változóba teszem a helyét és így adom át.
+  Hierarchia:
+  	- belső application.properties (.jar belül): itt keres legelőször, ha itt nem talál akkor megy tovább
+  	- külső application.properties (.jar mellett)
+  	- profil alapú konfiguráció
+  	- OS környezeti változói
+  	- Java System Properties
+  	- JNDI attribútumok (java:comp/env)
+  	- cmd parancssor (terminál: pl ha van portbeállítás a properties-ben, de itt megadok valami mást, ezt fogja használni)
+  Adatok beírása:
+  	Bármilyen szerkezetet kitalálhatunk, a . -ok egységeket különböztetnek meg.
+  	common.database.username = admin;
+  	portbeállítás: server.port = 9001
+  application.yaml:
+  	ugyanazt tudja, csak más formátumban adom meg az adatokat. A properties az erősebb, ha mindkettőben benne van egy adat pl. username, azt használja amelyik a properties-ben van.
+  	common:
+  		database:
+  			username: admin
+  CMD-ből futtatva, a properties-ben lévő port felülírása:
+  	tartalmazó mappa: mvn package
+  	target mappa: java -jar springproject-0.1.jar //így a properties-ben lévő porton indítja
+  				  java -Dserver.port=8090 -jar springproject-0.1.jar
+  A konfigurációs fájlokban nem csak konstans értékeket adhatunk meg:
+  	pl.: ${random.value}  - csak egyszer fog értéket generálni és mindig azt adja vissza, számok+betűk
+  		 ${random.int} - csak szám
+  		 ${random.long} - csak szám
+  		 ${random.int{0,100}} - csak szám, tartományon belül
+  Csoportos konfiguráció:
+  	Ha például egy pojo változóihoz állítunk be értékeket a properties-ben, meg lehet csinálni azt, hogy nem egyesével kötjük össze a @Value annotációval. Fontos, hogy a propertiesben a változó nevek ugyanígy szerepeljenek, mint a pojo-ban, vagy kötőjellel: firstName vagy first-name. Ahoz, hogy működjön a POJO-nak bean-nek kell lennie. @EnableConfigurationProperties annotáció a main osztály fölé: így összeköthetünk csoportosan osztályváltozókat a properties-ben lévő értékekkel. @ConfigurationProperties-el mondom meg mivel akarom összekötni az osztályváltozókat a properties-ből.
+  	@ConfigurationProperties(prefix = "person")
+  	Setteren keresztül injektálja be az értékeket.
+  	A propertiesben egy másik property értékére is hivatkozhatunk és fűzhetünk is hozzá.
+  		person-plus.firstname = Renáta
+  		person-plus.lastname = ${person-plus.firstname} Figler
+  	A pom.xml-hez is hozzá kell adni egy dependency-t, hogy működjön. Ez az újabb verziókban alapból benne van.
+  Profilok:
+  	Különböző környezetekben különböző módon használjuk az alkalmazásunkat. Pl. más adatbázishoz kapcsolódunk teszten mint élesen. Vagy azt szeretnénk ha működne oracle és postgresql-el is a programunk, és kiveszi a properties-ből a megfelelő beállításokat. Igy mindkét környezetnek kell építeni egy profilt, hogy működjön. Minden környezetnek csinálunk egy application.properties fájlt. Az eredetiben pedig beállítjuk, hogy melyik aktív. Amelyiket aktívra állítom, onnan fog értékeket venni.
+  	A profilokból az értékeket használhatjuk osztályokon belül, ha bean-ek,ilyenkor a @Value annotációval tudjuk kivenni az értéet, és amelyik profil aktív abból az application.propertiesből lesz kiolvasva az érték.
+  	Ha az osztály maga nem bean, akkor a mainben is létrehozhatunk egy bean példányt az osztályból, meghadhatjuk hogy dev vagy prod esetben jöjjön létre. És a profilnak megfelelően fog létrejönni az objektum. Tehát lehetőség van rá, hogy máshogy műödjön dev-ben és prodban.
+  	Ha olyat bean példányt is létrehozun aminek nem határozzuk meg a profilját, akkor az fog lefutni.
+  	A profilok helyett jobb megoldás ha minden környezetnek saját application.properties file-ja van és nem a programban, hanem a .jar file mellett, vagy valahol az adott szerveren, és a nagyon sensitive adatok pedig környezeti változókból vannak kiolvasva.
+
+Pom.xml:
+  	• Generálja a spring, de végezhetünk rajta módosításokat.
+  	• Ez a fájl a maven-hez kell, ebben lesz egy lista a külső függőségekről (pl itext, jdbc) amire szükségem van, és a maven ez alapján megkeresi, letölti és a helyére teszi ezeket a függőségeket.
+  	• Tartalmaz metaadatokat (pl hogy melyik készüljön el, .jar vagy .war)
+    • <parent> tag mondja meg, hogy milyen magot szeretnénk használni a spring bootból. ---> egy már meglévő kódállományt terjesztünk ki
+
+

@@ -1,0 +1,89 @@
+Java EE:
+	• eredeti Oracle termék
+	• csak alkalmazás szerveren futtatható: pl. glassfish, jboss, wildfly
+Spring:
+	• nyílt forráskódú
+  • egyszerű szerveren is fut mint a Tomcat
+
+Spring, Spring Boot:
+  Spring
+  	• keretrendszer,
+  	• ingyenes, nyílt forráskódú
+  	• modulokkal rendelkezik
+  	• orm kompatibilis
+  	• rest service
+  	• dokumentáció: spring.io
+  Spring Boot
+  	Spring Boot: Springre épülő másik keretrendszer. A Springben nagyon sok mindent be kell állítani xml konfiguráción keresztül. A Spring Boot-ban nagyon sok mindent készen kapunk, amin persze lehet változtatni.
+  		○ könnyen válogatható modulok
+  		○ egyértelmű belépőpont (public static void main)
+  		○ beépített Tomcat
+  Spring Boot CLI:
+  	Command line eszköz a spring boothoz, amin keresztül gyorsan lehet projekteket készíteni.The Spring Boot CLI (Command Line Interface) is a command line tool that you can use to quickly prototype with Spring. It lets you run Groovy scripts, which means that you have a familiar Java-like syntax without so much boilerplate code. You do not need to use the CLI to work with Spring Boot, but it is definitely the quickest way to get a Spring application off the ground.
+  	spring help paranccsal ellenőrizzük, hogy működik-e, ehhez is megcsináljuk a környezeti változót. Előnye, hogy prototipusokat nagyon gyorsan létre lehet vele hozni.
+
+Groovy:
+  Groovy:
+  	Ez is egy programozási nyelv, szintén byte kódot készít amit a JVM értelmezni tud, mint a java.
+  	Kevesebb kódot kell írni, pl visszatérő értéknél nem kell használni a return szót.
+  	Letöltjük a legfrisebb verziót
+  	Command line-on keresztül használható program, így csinálunk hozzá környezeti változót.
+  	Ha ez megvan groovy -v paranccsal ellenőrizhetjük a verziót.
+  Spring cli tudja futtatni. -> spring run fájl.groovy --> tomcat szervert hoz létre automatikusan és futtatja a projektet.
+
+Egyszerű projekt létrehozás:
+  Letöltés + környezeti változó létrehozása:
+  - jdk
+  - tomcat
+  - groovy
+  - gradle
+  - spring boot cli
+  - maven
+  - STS ide
+  1. Projekt -- ElsoGroovy (létrehozás + futtatás)
+  	- Létrehozunk egy hello.groovy fájlt
+  	  /*Jelzi a spring számára, hogy ez egy speciális osztály, képes elkapni requesteket és választ adni rájuk.*/
+  	- @RestController
+  		class ThisWillActuallyRun {
+  			/*Útvonal amit a felhasználó beír. Ha a / jel után nem ír semmit akkor ide fog jutni. Milyen címre érkező requesteket kap el.*/
+  			@RequestMapping("/")
+  			String home() {
+  			"Hello World!"
+  			}
+  		}
+  	- Lefuttatjuk a spring-el a cli-t használva. Ez letölt mindent ami szükséges a projekthez. spring run hello.groovy
+  	- Indít egy tomcat szervert is a futtatáshoz, alapból a 8080 portot fogja használni, azonban ezt tudjuk módosítani:
+  		spring run hello.groovy -- --server.port=9000
+  2. Projekt -- ElsoJava (létrehozás)
+  	- start.spring.io oldalon generáltatjuk . Csak ki kell töltenünk mit szeretnénk, milyen függőségekre van szükségünk, és legenerálja az alapot.
+  	- web dependency
+  	- maven csomagolót választunk --> lesz egy pom.xml a létrejövő projektben
+  3. Projekt -- Demo (létrehozás)
+  	- alap séma létrehozása lehet command line-ból is
+  	- spring init
+  	- felcsatlakozik a start.spring.io-ra és létrehoz egy demo projektet
+  4. Projekt -- ElsoJava (futtatás)
+  	- mvn install --> central repositoryból leszedi az összes szükséges dependencyt, és össze is állítja a .jar/.war fájlt
+  	- létrehoz egy target mappát, ebben lesz a .jar fájl
+  		- jar.original --> ez a programunk
+  		- jar --> ez tartalmazza a függőségeket is (fat jar a neve)
+  5.Projekt -- (létrehozás, futtatás)
+  	- STS ide segítségével alap projektet hozunk létre:
+  		- spring starter project, itt beállítjuk a dependencyket, csomagolót, java verziót
+  		- package név kisbetű mindig
+  		- osztály nevek nagybetűk
+  	- mvn install
+  	-futtatása (bemegyünk a target mappába): java -jar elsospring-0.1.jar
+
+Csomagolás:
+  A javaban a futtatható fájlok .war vagy .jar kiterjesztésűek
+  	.war és .jar fájlokat csomagoló programok hoznak létre:
+  		○ maven: van egy un. centrál repositorja, ahová fel vannak töltve különböző szoftvercsomagok. Ezeket tudjuk lehúzni, a pom.xml-ben határozzuk meg, hogy mire van szükségünk. bin.zip verziót töltjük le a maven-ből, hogy ne azt használjuk amit a spring ad, hanem ki tudjuk próbálni magunk.
+  		○ gradle: binary only legfrisebb verziót töltjük le, ehhez is megcsináljuk a környezeti változót, command line verzió ellenőrzés gradle -v; ez groovy alapú, pom.xml helyett egy json szerű fájlt használ
+  		○ ant:  legrégebbi
+  	Ezek csomagolnak, lefordíttatnak a compilerrel, beszerzik a dependenciákat
+  A spring meg tudja kérni a mavent közvetlenül a csomagolásra, így ezzel nem kell foglalkoznunk, de manuálisan is lehet használni.
+
+Futtatás:
+   .war: ha van egy ilyen fájlunk és bemásoljuk a tomcat webapps mappájába, akkor a tomcat indulásakor kicsomagolja ezt a fájlt olyan szerkezetűvé mint amilyen a saját példa alkalmazásunk volt és futtatja. A tomcat oldalán a manager appban van egy rész, ahol tallózva is betehetünk .war filet és a deployra nyomva el is kezdi kicsomagolni a tomcat és a megfelelő helyre teszi.
+  .jar:  java -jar elsospring-0.1.jar
