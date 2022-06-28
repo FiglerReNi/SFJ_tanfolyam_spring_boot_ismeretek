@@ -82,4 +82,86 @@ H2:
 	Jdbc-vel használva schema.sql en adhatjuk meg a létrehozandó adatbázis szerkezetet.
 		§ spring.datasource.url=jdbc:h2:file:/C:/Program Files/Java/SpringProjekt/SpringMasodik/test
 
+Frontend:
+  Templates mappába csinálunk nézeteket és ezt használjuk @Controllerrel, ahonnan dinamius adatokat tudunk átadni.
+  A kettő közötti kapcsolathoz keretrendszereket használunk:
+  	• JSP
+  	• GSP
+  	• Velocity
+  	• Freemarker
+    • Thymeleaf (ezt használjuk)
 
+THYMELEAF
+  pom.xml-be kell dependencyként:
+  	Projekt létrehozásakor kiválaszthatjuk
+  		  <dependency>
+  			<groupId>org.springframework.boot</groupId>
+  			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+  		  </dependency>
+  	A Spring Security-hez van kiegészítő dependency, hogy hozzáférjen bizonyos adatokhoz:
+  		<dependency>
+  		    <groupId>org.thymeleaf.extras</groupId>
+  		    <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+  		</dependency>
+  	A fragmentek használatához is van egy debendency és a WebMvcConfigurer implementálásával regisztrálni kell egy Bean-t. Ehhez az osztály fölé kell a @Configuration annotáció, hogy tudjunk Bean regisztrálni :
+  		<dependency>
+  		<groupId>nz.net.ultraq.thymeleaf</groupId>
+  		<artifactId>thymeleaf-layout-dialect</artifactId>
+  		</dependency>
+  	Bean regisztrálása:
+  		@Bean
+  		public LayoutDialect layoutDialect() {
+  		  return new LayoutDialect();
+  		}
+
+  Alap használat:
+  	- ha nem használunk devToolst akkor application.properties: spring.thymeleaf.cache = false ---> nem fog cachelni a böngésző.
+  	- xmlns:th="http://www.thymleaf.org ---> html tagbe kell
+  	A templates mappába kell legyenek a html fájlok
+  	Ahhoz, hogy ezt elérjük kell a @Controller. A kommunikáció a nézet és controller között egy Model objektum segítségével történik, amit biztosít a framework.
+  	Adatátadás backend oldalról: model.addAttribute("pageTitle", "Minden napra egy sztori"); A böngészőben az így átadott adat statikusként látszódik, F12-vel már nincs ott a th tag a forrásban.
+  	A Local is ilyen eszköz, kommunikáció a nézet és a controller között de ezzel információat írhatunk ki a localunkról. Pl. alapértelmezett nyelv, vagy ország.
+
+  Tagek:
+  		○  th:text="${}"
+  		○  th:utext="${}" --->html tartalmú szöveghez
+  		○  th:href="@{}" --> pl. css útvonal, a static mappához képest kell megadni
+  		○  th:each="story : ${stories}" ---> for ciklus a html-be, ha a lista eleme egy újabb objektumot tartalmaz, annak a változóira is tudunk hivatkozni, pl. story.blogger.name
+  		○ th:text="${#dates.format(eredeti_datum, 'yyyy.MM.dd')}"
+  		○ th:action="@{}" ---> form hová írányítson submit után
+  		○ th:if="${}" --> pl akkor jelenjen meg egy elem, ha létezik a paraméter
+
+  Fragmentek:
+  	Minden honlapon vannak olyan tartalmak, amelyek nem változnak az oldalakon pl. header, menü, footer. Ezeket célszerű csak egyszer létrehozni. Erre jók a fregmentek. Ezeket bármelyik html-ben felhasználhatjuk.
+  		○ kell hozzá egy plusz dependency
+  		○ bean regisztráció a  WebMvcConfigurer implementálásával
+  		○ namespace is minden oldalra ahol használjuk: xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout
+  	Használata:
+  		<html lang="hu" layout:decorate="~{layouts/main}"> - minden oldalon ahová behúzom a main-t, ami a közös elemeket tartalmazza
+  		<div layout:fragment="SajatTartalom"></div> - ide jön az eltérő tartalom, amit beágyazunk a main-be
+
+  Security-vel használata:
+  	○ Ha saját login oldalt használunk, akkor a login oldalról a beérkező bejelentkezési adatokat vissza kell juttatni a spring securitynak, hogy a normál folyamatait el tudja végezni, úgy mint ha a beépített login oldalt használnánk. Ehhez olyan formra van szükség aminek 3 fix része tuti van: felhasználónév + jelszó + mentés gomb.
+  Kell a thymeleaf-hoz tartozó security dependency, és a létrehozott formot tudjuk visszairányítani a securityhez.
+  		th:action="@{/login}" --> így a spring securityhez kerülnek a bekért adatok
+  	○ sec:authorize="isAuthenticated()" --> ezzel vizsgáljuk, hogy be van-e jelentkezve és ha igen csak akkor jelenik meg egy az adott elem a formon például.
+  param.error ---> automatikusan kapjuk a securitytól, ha rossz a felhasználónév vagy a jelszó
+
+
+i18n:
+  Internationalization:
+  	i18n (többnyelvűsítés)
+  A honlap automatikusan képes felismerni a böngésző automatikus nyelvét.
+  	resources alá:
+  		○ messages.properties --> ez az alap
+  		○ messages_en.properties --> minden kívánt nyelvhez létrehozok egyet
+  		○ html-ben jelölni kell azokat az elemeket ahol használjuk:
+  			th:text="#{yourIp}"
+  		○ application.properties-ben beállíthatom melyik nyelv legyen az alap:
+  			spring.mvc.locale-resolver=fixed ---> ez mindig kötelező
+  			spring.mvc.locale=hu ---> ha ez nincs veszi a böngészőjét
+  		○ böngészőben nyelvállítás: about:config --->
+  			(firefox)(chromban így már nincs)
+  			intl.accept_languages
+  			intl.hyphenation-alias.hu-*
+  A messages.propertiesnek lehet baja az ékezetes karakterekkel, notepad++ ban kell átállítani a fájl karakterkódolását.
