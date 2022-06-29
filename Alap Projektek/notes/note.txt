@@ -86,4 +86,56 @@ Csomagolás:
 
 Futtatás:
    .war: ha van egy ilyen fájlunk és bemásoljuk a tomcat webapps mappájába, akkor a tomcat indulásakor kicsomagolja ezt a fájlt olyan szerkezetűvé mint amilyen a saját példa alkalmazásunk volt és futtatja. A tomcat oldalán a manager appban van egy rész, ahol tallózva is betehetünk .war filet és a deployra nyomva el is kezdi kicsomagolni a tomcat és a megfelelő helyre teszi.
-  .jar:  java -jar elsospring-0.1.jar
+   .jar:  java -jar elsospring-0.1.jar
+
+Projektek fajtái:
+  	1. Frontend és backend együtt:
+  		MVC struktúra
+  		Weblaprendszerekhez a sima @Controller - nézet párost szokták használni, mivel formázott html-t kell nagyrészt visszaadni
+  		Például thymeleaf segítségével a frontend oldalról, backend oldalról pedig @Controller, @RequestMapping("/tortenetek") és a Model segítségével.
+  	2. Webservie-k
+  		Frontend és backend elválik, szerver szinten is.
+  		Backend json vagy xml-t ad vissza.
+  		Frontend pl angularban vagy reactben írva fogadja ezeket, illetve kéréseket intéz a a webservice-hez, amire json/xml választ kap.
+  		A backend részről pedig csak kiadjuk az adatot @RestController, @RequestMapping("/tortenetek"), @JsonBackReference (idegen kulcs esetén fontos, amikor egyik objektumba ágyazódik a másik) segítségével. Ilyenkor egy json-t adunk át, vagy xml-t, esetleg sima text-et, amit a frontend feldolgoz.
+  	3. API
+  		Olyan alkalmazások, amiket mások meg tudna hívni. Pl egy árfolyam kereső, ami megkeresi a legjobb árfolyamot, de nem egy honlapra vezeti ki, hanem más alkalmazások tudják meghívni (web jar-ban kell megcsinálni). Ilyenek a maven central repositoryban lévő meghívható alkalmazások is, pl. jdbc, ide a sajátunkat is feltölthetjük
+  		@RestController-t használjuk ezekhez, mert ott elég adatot visszaadni sok esetben. Pl. json, xml stb.
+
+MVC(Modell-View-Controller):
+  	• nézet: valahogy ki fog nézni az alkalmazás. Weblapon például ugyanez a html. Célja, hogy a felhasználó lássa az információkat.
+  	• kontroller: a 'gondolkodó' rész, ez felel a kalkulációkért. Megkapja a nézettől az adatokat (pl input box értékei), ebben a rétegben írjuk meg, mi hogyan történjen. Irányítja a logikát. Kommunikál a modellel, és a nézettel is.
+    • modell: az információk el legyenek tárolva, ezért felelős --> össze van kötve az adatbázissal. Előnye ha adatbázison módosítok pl mysql-ről oracle-re, akkor csak a modellen kell módosítani. Visszaadja a szüséges információt a kontrollernek. Ha olyan programot írunk aminek nem kell semmilyen adatot tárolnia nem lesz ilyen rétegünk (nem kötelező)
+
+SERVICE:
+  Webservice:
+  	xml/json válaszokat képes adni, a webapplication és az adatbázis között áll. Vagy egy mobilalkalmazás esetén közvetlenül a kliens (mobilalkalmazás) és az adatbázis között. Előnye: van egy weblapunk, egy mobilalkalmazásunk és mindkettő ugyanabból az adatbázisból dolgozik, mindkettő ugyanattól a webservicetől tud adatot kérni. A webservice kommunikál az adatbázissal és visszaadja a kért adatot. Közvetlenül az adatbázishoz így nem adunk hozzáférést. Egységes autentikáció lehet minden felületről, lehet rendszerezni ki hogyan fér hozzá az adatbázishoz. Ki milyen adatokat kérhet le.
+  Webapplication:
+  	a klienssel áll kapcsolatban -> pl. böngésző és html+css+js választ ad.
+  Microservice:
+  	A webserviceben lévő funkciókat szétszedjük  ún. microservicekre, így külön lehet őket kezelni, például teljesítmény/erőforrás szempontjából (skálázhatóság), vagy hogy milyen kliensről érjék el. Önmagában egy egység, egy adott feladatért felelős kis webservice. Így loosly coupled lesz a rendszerünk, ezeket tesztelni is sokkal könnyebb, hiszen a microservicek önmagukban egy egységek.
+  	Webservice elérése két féleképp (ezek eljárások, hogy adatot kérhessünk a szervertől):
+  		○ rest
+  		○ soap (protokoll)
+
+Spring Projekt Felépítés:
+  Projekt felépítése:
+  MVC:
+  	• Nézet(View):
+  		○ Static: image, css, js, statikus html oldalak, amiket nem controllerből hívunk, pl ha így csinálunk egy index.html-t. Külön mappába szokták rendezni a képeket pl a html-től a staticon belül
+  		○ Templates: html thymeleaf-el
+  	• Controller: két része lesz:
+  		○ Controller: információ begyűjtése és visszavitele a nézet felé
+  			§ alap: nézetet keres amit visszaad, oldalakra irányít
+  			§ rest: adatot ad vissza egyből, json, xml
+  		○ Service: üzleti logika, kalkulációk, számítások a kapott adatokból, még mielőtt elküldenénk az adatbázisnak vagy mielőtt visszaküldenénk. Ez kommunikál a repositoryval is
+  		○ Config – ez a különféle beállításoknak kell, pl a Securityhez.
+  		○ Utils - segítő osztályok, pl. Random generálás
+  	• Model
+  		○ Domain (Model): ebbe kerülnek a POJO-kalkulációk + Entity
+  		○ Repository: az adatbázissal kommunikál, minden entity-hez külön repository tartozik, ezek a fájlok nem classok, hanem interfacek lesznek, amik kiterjesztik a CrudRepository-t, amiben egy csomó előre megírt dolog van, amit tudunk használni és módosítani. Az adatbázissal kommunikál, ide kerülnek az sql-ek, illetve beépített sql lehetőségek
+  Ennek megfelelően létrehozunk egy fő packaget, és ez alatt létrehozunk sub package-ket, hogy külön tudjuk tenni a controllert és a service-ket. Azért csináljuk így, mert a @componentscan csak az adott package-ben keresi a beaneket, ha nem írjuk felül. Így egy package-ben lesznek de mégis külön logikailag.
+  Adatáramlás:
+  Adatbázis -> Entity -> Repository -> Service -> Controller -> Felület
+
+
